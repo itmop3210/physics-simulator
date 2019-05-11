@@ -3,14 +3,18 @@ Physics project. This one uses Apache Cordova
 
 ## Getting started
 1. Clone project
+
 ```git clone https://github.com/itmop3210/PhysicsSimulator2.git```
+
 ```cd PhysicsSimulator2```
 
 2. Install Cordova
+
 ```npm install -g cordova```
 
 ## Opening project in browser
 ```cordova run browser```
+
 _It seems there is no hot-reload when you change some code. To apply changes, you need to press CTRL+C, then run command above one more time._
 
 ## Opening on an Android device
