@@ -16,7 +16,7 @@ _It seems there is no hot-reload when you change some code. To apply changes, yo
 ## Opening on an Android device
 [Full guide here](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html)
 
-###TL DR:
+### TL DR:
 
 - Install Android Studio, it will install required SDKs automatically
 
@@ -29,8 +29,8 @@ _It seems there is no hot-reload when you change some code. To apply changes, yo
 - Connect your Android phone via USB
 
 
-###Build app:
+### Build app:
 ```cordova build android```
 
-###Run app:
+### Run app:
 ```cordova run android```
