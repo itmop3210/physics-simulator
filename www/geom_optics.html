@@ -58,9 +58,12 @@
                 const canvas = document.getElementById('canvas');
                 const ctx = canvas.getContext('2d');
 
+                const refrAngle = calcRefrAngle(cur_angle, n1, n2);
+
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
                 drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
+                drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
             }
 
             function drawSubstances(ctx) {
@@ -110,6 +113,9 @@
             }
 
             function drawAngledLine(ctx, point, angle, length, style = "#00AA00") {
+                if (isNaN(angle))
+                    return;
+
                 const p2 = calcSecondPoint(point, angle, length);
 
                 ctx.beginPath();
@@ -121,6 +127,9 @@
             }
 
             function drawArrow(ctx, point, angle, length, where, style = "#00AA00") {
+                if (isNaN(angle))
+                    return;
+                
                 drawAngledLine(ctx, point, angle, length, style);
                 if (where == 'in') {
                     drawAngledLine(ctx, point, angle + 0.3, 14, style);
@@ -131,6 +140,23 @@
                     drawAngledLine(ctx, p2, angle + Math.PI + 0.3, 14, style);
                     drawAngledLine(ctx, p2, angle + Math.PI - 0.3, 14, style);
                 }
+            }
+
+            function calcRefrAngle(angle, n_1, n_2) {
+                if (angle > Math.PI / 2)
+                    [n_1, n_2] = [n_2, n_1];
+
+                let fullReflAngle = Math.asin(n_2 / n_1);
+                //console.log("angle: " + angle + ", full refl: " + fullReflAngle);
+                if (Math.PI - angle > fullReflAngle)
+                    return NaN;
+
+                let result = Math.atan(Math.sin(angle) * n_1 / n_2);
+                if (angle < Math.PI / 2)
+                    result -= Math.PI;
+                else
+                    result = Math.PI * 2 - result;
+                return result;
             }
 
             function calcAngle(mouseX, mouseY) {
