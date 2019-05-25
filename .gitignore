@@ -54,3 +54,7 @@ platforms/browser/www
 
 # res
 resources/signing
+
+#vim
+*.swp
+*.swo
