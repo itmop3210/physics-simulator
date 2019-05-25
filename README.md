@@ -38,3 +38,10 @@ _It seems there is no hot-reload when you change some code. To apply changes, yo
 
 ### Run app:
 ```cordova run android```
+
+## Starting to develop
+1. Open ```/www``` directory
+
+2. Create .html file for your demonstration. You can use ```geom_optics.html``` as an example.
+
+3. Add a link to your demonstration in ```index.html``` file.
