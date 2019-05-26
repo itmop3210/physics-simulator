@@ -60,13 +60,15 @@
 
                 const refrAngle = calcRefrAngle(cur_angle, n1, n2);
 				const brAngle = calcBryusterAngle(cur_angle, n1, n2);
+				const reverseBrAngle = calcBryusterAngle(cur_angle, n2, n1);
 
 				const epsilon = 0.01;
 
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
 				 
-				if(Math.abs(cur_angle - brAngle) < epsilon)
+				if( Math.abs(cur_angle - brAngle) < epsilon ||
+					(Math.abs(cur_angle - reverseBrAngle) < epsilon && cur_angle > Math.PI/2))
 				{
                 	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
                 	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar' );
@@ -76,11 +78,15 @@
                 	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
 				}
 
-				drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
-				if(cur_angle < Math.PI/2)
+				if(cur_angle < Math.PI/2) {
 					drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, -cur_angle, '#000000');
-				else
+					drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
+				} else
+				{
 					drawAngleValue(ctx, RAY_CENTER, 150/3, -cur_angle, refrAngle, '#000000');
+					drawAngleValue(ctx, RAY_CENTER, 150/3, cur_angle, Math.PI, '#000000');
+				}
+
             }
 
             function drawSubstances(ctx) {
