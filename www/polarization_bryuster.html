@@ -235,6 +235,13 @@
 
 				} else
 					ctx.arc(centerPoint.x, centerPoint.y, distance, -startAngle + 3*Math.PI/2, -endAngle + 3*Math.PI/2, true);
+				
+				const textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 9/8*distance);
+
+				ctx.font = "16px Times New Roman";
+				const angleInDegrees = Math.round(angle/Math.PI*180);
+				ctx.fillText(angleInDegrees, textPoint.x, textPoint.y);
+
 				ctx.stroke();
 				ctx.closePath();
 			}
