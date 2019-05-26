@@ -65,7 +65,7 @@
 
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
-
+				 
 				if(Math.abs(cur_angle - brAngle) < epsilon)
 				{
                 	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
@@ -75,6 +75,12 @@
 					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
                 	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
 				}
+
+				drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
+				if(cur_angle < Math.PI/2)
+					drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, -cur_angle, '#000000');
+				else
+					drawAngleValue(ctx, RAY_CENTER, 150/3, -cur_angle, refrAngle, '#000000');
             }
 
             function drawSubstances(ctx) {
@@ -201,6 +207,37 @@
                     drawAngledLine(ctx, p2, angle + Math.PI - 0.3, 14, style);
                 }
             }
+
+			function drawAngleValue(ctx, centerPoint, distance, startAngle, endAngle, style = "#00AA00") {
+				
+				if(startAngle > Math.PI)
+					startAngle = -2*Math.PI + startAngle;
+				
+				if(endAngle > Math.PI)
+					endAngle = -2*Math.PI + endAngle;
+
+				const epsilon = 0.01;
+
+				let angle = Math.abs(endAngle - startAngle);
+
+				ctx.beginPath();
+				ctx.strokeStyle = style;
+
+				if(Math.abs(angle - Math.PI/2) < epsilon) {
+					const p1 = calcSecondPoint(centerPoint, startAngle, distance);
+					const p2 = calcSecondPoint(centerPoint, endAngle, distance);
+					const p3 = calcSecondPoint(p1, startAngle + Math.PI/2, distance);
+					
+					ctx.moveTo(p3.x, p3.y);
+					ctx.lineTo(p1.x, p1.y);
+					ctx.moveTo(p3.x, p3.y);
+					ctx.lineTo(p2.x, p2.y);
+
+				} else
+					ctx.arc(centerPoint.x, centerPoint.y, distance, -startAngle + 3*Math.PI/2, -endAngle + 3*Math.PI/2, true);
+				ctx.stroke();
+				ctx.closePath();
+			}
 
             function calcRefrAngle(angle, n_1, n_2) {
                 if (angle > Math.PI / 2)
