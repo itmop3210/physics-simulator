@@ -59,11 +59,22 @@
                 const ctx = canvas.getContext('2d');
 
                 const refrAngle = calcRefrAngle(cur_angle, n1, n2);
+				const brAngle = calcBryusterAngle(cur_angle, n1, n2);
+
+				const epsilon = 0.01;
 
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
-                drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
-                drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+
+				if(Math.abs(cur_angle - brAngle) < epsilon)
+				{
+                	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar' );
+				} else
+				{
+					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+				}
             }
 
             function drawSubstances(ctx) {
@@ -207,6 +218,14 @@
                     result = Math.PI * 2 - result;
                 return result;
             }
+
+			function calcBryusterAngle(angle, n_1, n_2) {
+				let result = Math.atan(n_2/n_1);
+
+				if(angle > Math.PI/2)
+					result = Math.PI - result;
+				return result;
+			}
 
             function calcAngle(mouseX, mouseY) {
                 let dx = RAY_CENTER.x - mouseX;
