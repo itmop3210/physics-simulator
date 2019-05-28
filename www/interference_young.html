@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<script type="text/javascript" src="js/interference_young.js"></script>
+</head>
+
+<body>
+	<h1>Интерференция. Опыт Юнга.</h1>
+	<form>
+		<input type="text" id="lambda" placeholder="Длина волны">
+		<input type="text" id="hole_height" placeholder="Расстояние между отверстиями">
+		<input type="text" id="source_width" placeholder="Расстояние от источника до панели с щелями ">
+		<input type="text" id="screen_width" placeholder="Расстояние от панели до экрана ">
+		
+		<input type="button" value="Построить" id="submit" onClick="updateValues()">
+	</form>
+
+	<div id="canvas-container">
+		<canvas id="canvas" width="400" height="400"></canvas>
+	</div>
+</body>
+</html>
