@@ -1,37 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <!--<meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
+        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
-        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
         <title>Геометрическая оптика</title>
+
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="order-1 order-sm-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Назад</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="mx-auto order-2">
-                <span class="navbar-brand mx-auto" style="font-size: 17px;">Геометрическая оптика</span>
-            </div>
-            <div class="order-3">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="geom_optics_info.html">Инфо</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <br>
-
         <div id="canvas-container">
+            <h1>Поляризация. Угол Брюстера</h1>
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
 
@@ -78,11 +59,22 @@
                 const ctx = canvas.getContext('2d');
 
                 const refrAngle = calcRefrAngle(cur_angle, n1, n2);
+				const brAngle = calcBryusterAngle(cur_angle, n1, n2);
+
+				const epsilon = 0.01;
 
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
-                drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
-                drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+
+				if(Math.abs(cur_angle - brAngle) < epsilon)
+				{
+                	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar' );
+				} else
+				{
+					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+				}
             }
 
             function drawSubstances(ctx) {
@@ -145,11 +137,60 @@
                 ctx.closePath();
             }
 
-            function drawArrow(ctx, point, angle, length, where, style = "#00AA00") {
+			function drawAngledLineWithDashes(ctx, point, angle, length, style = "#00AA00", state = 'unpolar') {
+                if (isNaN(angle))
+                    return;
+
+				drawAngledLine(ctx, point, angle, length, style);
+				
+				let margin = length/10;
+				let dashLength = length/20;
+
+				if(state != 'polar')
+				{
+					//draw dashes
+					for(let i = 1; i < 9; i++)
+					{
+						let centerPoint = calcSecondPoint(point, angle, margin*i);
+						let p1 = calcSecondPoint(centerPoint, angle + Math.PI/2, dashLength/2);
+					
+						drawAngledLine(ctx, p1, angle - Math.PI/2, dashLength, '#7A7A7A');
+					}
+				}
+
+				if(state != 'half-polar')
+				{
+					for(let i = 1; i < 9; i++)
+					{
+						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
+
+						ctx.beginPath();
+						ctx.strokeStyle = '#7A7A7A';
+						ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
+						ctx.stroke();
+						ctx.closePath();
+					}					
+				}else 
+				{
+					for(let i = 1; i < 9; i = i + 2)
+					{
+						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
+
+						ctx.beginPath();
+						ctx.strokeStyle = '#7A7A7A';
+						ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
+						ctx.stroke();
+						ctx.closePath();
+					}		
+				}
+
+			}
+
+            function drawArrow(ctx, point, angle, length, where, style = "#00AA00", state) {
                 if (isNaN(angle))
                     return;
                 
-                drawAngledLine(ctx, point, angle, length, style);
+                drawAngledLineWithDashes(ctx, point, angle, length, style, state);
                 if (where == 'in') {
                     drawAngledLine(ctx, point, angle + 0.3, 14, style);
                     drawAngledLine(ctx, point, angle - 0.3, 14, style);
@@ -177,6 +218,14 @@
                     result = Math.PI * 2 - result;
                 return result;
             }
+
+			function calcBryusterAngle(angle, n_1, n_2) {
+				let result = Math.atan(n_2/n_1);
+
+				if(angle > Math.PI/2)
+					result = Math.PI - result;
+				return result;
+			}
 
             function calcAngle(mouseX, mouseY) {
                 let dx = RAY_CENTER.x - mouseX;

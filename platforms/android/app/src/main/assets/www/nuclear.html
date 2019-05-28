@@ -1,37 +1,51 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <!--<meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
+        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
-        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
-        <title>Геометрическая оптика</title>
+        <link rel="stylesheet" type="text/css" href="css/nuclear.css">
+        <title>Ядерная физика</title>
+
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="order-1 order-sm-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Назад</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="mx-auto order-2">
-                <span class="navbar-brand mx-auto" style="font-size: 17px;">Геометрическая оптика</span>
-            </div>
-            <div class="order-3">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="geom_optics_info.html">Инфо</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <br>
-
         <div id="canvas-container">
+            <h1>Закон распада</h1>
+			
+			<div class="flex-container">
+				<!--<select>
+				  <option><span><sup class="A">238</sup><sub class="Z">92</sub>U</span></option>
+				  <option><sup class="A">224</sup><sub class="Z">88</sub>Ra</option>
+				</select>-->
+				
+				<label for="select" class="select">
+					<input type="radio" name="list" value="not_changed" id="bg" checked />
+					<input type="radio" name="list" value="not_changed" id="select">
+					<label class="bg" for="bg"></label>
+					<div class="items">
+					  <input type="radio" name="list" value="first_value" id="list[0]">
+					  <label for="list[0]"><sup class="A">238</sup><sub class="Z">92</sub>U</label>
+					  <input type="radio" name="list" value="second_value" id="list[1]">
+					  <label for="list[1]"><sup class="A">224</sup><sub class="Z">88</sub>Ra</label>
+					  <span id="text">Выберите элемент</span>
+					</div>
+				</label>
+				
+				<span class="AZ">&#8594 &#945 (
+					<sup class="A">4</sup class="A">
+					<sub class="Z">2</sub class="Z">
+					He) +
+				</span>
+				
+				<select>
+				  <option><span class="AZ"><sup class="A">238</sup><sub class="Z">92</sub>U</span></option>
+				  <option><sup class="A">224</sup><sub class="Z">88</sub>Ra</option>
+				</select>
+			</div>
+			
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
 
