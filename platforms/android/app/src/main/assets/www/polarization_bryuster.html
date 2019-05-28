@@ -7,12 +7,12 @@
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
-        <title>Геометрическая оптика</title>
+        <title>Поляризация. Закон Брюстера</title>
 
     </head>
     <body>
         <div id="canvas-container">
-            <h1>Поляризация. Угол Брюстера</h1>
+            <h1>Поляризация. Закон Брюстера</h1>
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
 
@@ -60,13 +60,15 @@
 
                 const refrAngle = calcRefrAngle(cur_angle, n1, n2);
 				const brAngle = calcBryusterAngle(cur_angle, n1, n2);
+				const reverseBrAngle = calcBryusterAngle(cur_angle, n2, n1);
 
 				const epsilon = 0.01;
 
                 drawSubstances(ctx);
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
-
-				if(Math.abs(cur_angle - brAngle) < epsilon)
+				 
+				if( Math.abs(cur_angle - brAngle) < epsilon ||
+					(Math.abs(cur_angle - reverseBrAngle) < epsilon && cur_angle > Math.PI/2))
 				{
                 	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
                 	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar' );
@@ -75,6 +77,16 @@
 					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
                 	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
 				}
+
+				if(cur_angle < Math.PI/2) {
+					drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, -cur_angle, '#000000');
+					drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
+				} else
+				{
+					drawAngleValue(ctx, RAY_CENTER, 150/3, -cur_angle, refrAngle, '#000000');
+					drawAngleValue(ctx, RAY_CENTER, 150/3, cur_angle, Math.PI, '#000000');
+				}
+
             }
 
             function drawSubstances(ctx) {
@@ -202,6 +214,44 @@
                 }
             }
 
+			function drawAngleValue(ctx, centerPoint, distance, startAngle, endAngle, style = "#00AA00") {
+				
+				if(startAngle > Math.PI)
+					startAngle = -2*Math.PI + startAngle;
+				
+				if(endAngle > Math.PI)
+					endAngle = -2*Math.PI + endAngle;
+
+				const epsilon = 0.01;
+
+				let angle = Math.abs(endAngle - startAngle);
+
+				ctx.beginPath();
+				ctx.strokeStyle = style;
+
+				if(Math.abs(angle - Math.PI/2) < epsilon) {
+					const p1 = calcSecondPoint(centerPoint, startAngle, distance);
+					const p2 = calcSecondPoint(centerPoint, endAngle, distance);
+					const p3 = calcSecondPoint(p1, startAngle + Math.PI/2, distance);
+					
+					ctx.moveTo(p3.x, p3.y);
+					ctx.lineTo(p1.x, p1.y);
+					ctx.moveTo(p3.x, p3.y);
+					ctx.lineTo(p2.x, p2.y);
+
+				} else
+					ctx.arc(centerPoint.x, centerPoint.y, distance, -startAngle + 3*Math.PI/2, -endAngle + 3*Math.PI/2, true);
+				
+				const textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 9/8*distance);
+
+				ctx.font = "16px Times New Roman";
+				const angleInDegrees = Math.round(angle/Math.PI*180);
+				ctx.fillText(angleInDegrees, textPoint.x, textPoint.y);
+
+				ctx.stroke();
+				ctx.closePath();
+			}
+
             function calcRefrAngle(angle, n_1, n_2) {
                 if (angle > Math.PI / 2)
                     [n_1, n_2] = [n_2, n_1];
@@ -211,7 +261,7 @@
                 if (Math.PI - angle > fullReflAngle)
                     return NaN;
 
-                let result = Math.atan(Math.sin(angle) * n_1 / n_2);
+                let result = Math.asin(Math.sin(angle) * n_1 / n_2);
                 if (angle < Math.PI / 2)
                     result -= Math.PI;
                 else
