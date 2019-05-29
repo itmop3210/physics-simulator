@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
+        <title>Дифракция</title>
+    </head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="order-1 order-sm-0">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Назад</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-2">
+        <span class="navbar-brand mx-auto" style="font-size: 17px;">Дифракция</span>
+    </div>
+    <div class="order-3">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="difrac_info.html">Инфо</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br>
+
+<div id="canvas-container">
+    <canvas id="canvas" width="400" height="400"></canvas>
+</div>
+
+<br>
+
+<div style="text-align: center;">
+
+    <span id="warntext" style="color: red;"></span>
+</div>
+
+<div style="height: 100px"></div>
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" src="js/touchToCursor.js"></script>
+
+<script type="text/javascript">
+
+    const RAY_CENTER = { x: 200, y: 200 };
+
+
+    let is_cur_down = false;
+
+
+
+    function onLoad() {
+        setupCanvas();
+        updateCanvasSize();
+        redraw();
+    }
+    function setupCanvas() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.onmousedown = canvMouseDown;
+        canvas.onmouseup = canvMouseUp;
+        canvas.onmousemove = canvMouseMove;
+        TouchToCursor(canvas);
+    }
+    function updateCanvasSize() {
+        const canvas = document.getElementById('canvas');
+        let size = Math.min(window.innerWidth, window.innerHeight - 60);
+        canvas.style.width = size + 'px';
+        canvas.style.height = size + 'px';
+    }
+    function redraw() {
+        const canvas = document.getElementById('canvas');
+        window.ctx = canvas.getContext("2d");
+        drawSubstances(ctx);
+        drawStar(90,200,8,9,3);
+        drawLight(90,200);
+
+    }
+
+    function drawSubstances(ctx) {
+        // substance 1
+        ctx.fillStyle = "#818181";
+        ctx.fillRect(0, 0, 400, 400);
+
+        // ctx.font = "15px Arial";
+        // ctx.fillStyle = "#222222";
+        // ctx.fillText("n1 = " + n1.toString().replace('.', ','), 10, 190);
+        //
+        // // substance 2
+        // // ctx.fillStyle = "#E5E5FF";
+        // // ctx.fillRect(0, 200, 400, 200);
+        //
+        // ctx.font = "15px Arial";
+        // ctx.fillStyle = "#222222";
+        // ctx.fillText("n2 = " + n2.toString().replace('.', ','), 10, 390);
+
+        // line between
+        // ctx.beginPath();
+        // ctx.strokeStyle = "#000000";
+        // ctx.moveTo(0, 200);
+        // ctx.lineTo(400, 200);
+        // ctx.stroke();
+        // ctx.closePath();
+        ctx.beginPath();
+        ctx.strokeStyle = "#040002";
+
+        ctx.moveTo(250, 100);
+        ctx.lineTo(250, 170);
+        ctx.lineTo(330,200);
+        ctx.lineTo(330, 130);
+        ctx.lineTo(250,100);
+        ctx.stroke();
+        ctx.closePath();
+
+            }
+    function drawStar(cx,cy,spikes,outerRadius,innerRadius){
+        let rot = Math.PI / 2 * 3;
+        var x=cx;
+        var y=cy;
+        var step=Math.PI/spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx,cy-outerRadius);
+        for(let i=0;i<spikes;i++){
+            x=cx+Math.cos(rot)*outerRadius;
+            y=cy+Math.sin(rot)*outerRadius;
+            ctx.lineTo(x,y);
+            rot+=step;
+
+            x=cx+Math.cos(rot)*innerRadius;
+            y=cy+Math.sin(rot)*innerRadius;
+            ctx.lineTo(x,y);
+            rot+=step;
+        }
+        ctx.lineTo(cx,cy-outerRadius);
+        ctx.closePath();
+        ctx.lineWidth=2;
+        ctx.strokeStyle="#040002";
+        ctx.stroke();
+        ctx.fillStyle="#ebfa12";
+        ctx.fill();}
+        function drawLight(cx,cy){
+            var x=cx;
+            var y=cy;
+            ctx.beginPath();
+            ctx.moveTo(cx,cy);
+            ctx.lineTo(330, 200);
+            ctx.lineTo(330, 130);
+            ctx.lineTo(250, 100);
+            ctx.lineTo(x,y);
+            ctx.closePath();
+            ctx.lineWidth=1;
+            ctx.strokeStyle="rgba(250,250,1,0.1)";
+            ctx.stroke();
+            ctx.fillStyle="rgba(250,250,1,0.3)";
+            ctx.fill();
+
+    }
+
+    function canvMouseDown(e) {
+        is_cur_down = true;
+    }
+
+    function canvMouseUp(e) {
+        is_cur_down = false;
+    }
+
+    function canvMouseMove(e) {
+        let canvas = e.target;
+        let rect = canvas.getBoundingClientRect();
+        let clickX = (e.clientX - rect.left) / (canvas.clientWidth / canvas.width);
+        let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+
+        if (is_cur_down) {
+            cur_angle = calcAngle(clickX, clickY);
+            redraw();
+        }
+    }
+
+    function onChangeN() {
+        let n1_in = document.getElementById('n1_in');
+        let n2_in = document.getElementById('n2_in');
+
+        let n_1 = parseFloat(n1_in.value);
+        let n_2 = parseFloat(n2_in.value);
+        if (!isNaN(n_1))
+            n1 = n_1;
+        else
+            n1_in.value = n1;
+
+        if (!isNaN(n_2))
+            n2 = n_2;
+        else
+            n2_in.value = n2;
+
+        if (n1 > n2) {
+            const tmp = n1;
+            n1 = n2;
+            n2 = tmp;
+
+            n1_in.value = n1;
+            n2_in.value = n2;
+        }
+
+        let errMsg = "";
+        if (n1 < 1)
+            errMsg += "Показатель преломления n1 меньше единицы!<br>";
+        if (n2 < 1)
+            errMsg += "Показатель преломления n2 меньше единицы!<br>";
+        document.getElementById('warntext').innerHTML = errMsg;
+
+        redraw();
+    }
+
+    window.onload = function() {
+        onLoad();
+    }
+
+    document.addEventListener("deviceready", onLoad, false);
+
+    window.onresize = function(e) {
+        updateCanvasSize();
+    }
+</script>
+</body>
+</html>
+
+
