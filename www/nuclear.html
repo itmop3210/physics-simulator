@@ -12,230 +12,570 @@
 
     </head>
     <body>
-        <div id="canvas-container">
-            <h1>Закон распада</h1>
-			
-			<div class="flex-container">
-				<!--<select>
-				  <option><span><sup class="A">238</sup><sub class="Z">92</sub>U</span></option>
-				  <option><sup class="A">224</sup><sub class="Z">88</sub>Ra</option>
-				</select>-->
-				
-				<label for="select" class="select">
-					<input type="radio" name="list" value="not_changed" id="bg" checked />
-					<input type="radio" name="list" value="not_changed" id="select">
-					<label class="bg" for="bg"></label>
-					<div class="items">
-					  <input type="radio" name="list" value="first_value" id="list[0]">
-					  <label for="list[0]"><sup class="A">238</sup><sub class="Z">92</sub>U</label>
-					  <input type="radio" name="list" value="second_value" id="list[1]">
-					  <label for="list[1]"><sup class="A">224</sup><sub class="Z">88</sub>Ra</label>
-					  <span id="text">Выберите элемент</span>
-					</div>
-				</label>
-				
-				<span class="AZ">&#8594 &#945 (
-					<sup class="A">4</sup class="A">
-					<sub class="Z">2</sub class="Z">
-					He) +
-				</span>
-				
-				<select>
-				  <option><span class="AZ"><sup class="A">238</sup><sub class="Z">92</sub>U</span></option>
-				  <option><sup class="A">224</sup><sub class="Z">88</sub>Ra</option>
-				</select>
+		<div id="container">
+			<div id="canvas-container">
+				<h1>Энергетические уровни</h1>
+
+				<br/><br/>
+
+				<form>
+					<b>Выберите серии для показа:</b>
+					</br>
+					<p class="flex-container">
+						<label>
+							<input type="checkbox" id="option1" value="1" onchange="manageSeries()">
+						</label>Серия Лаймана
+						<label>
+							<input type="checkbox" id="option2" value="2" onchange="manageSeries()">
+						</label>Серия Бальмера
+						<label>
+							<input type="checkbox" id="option3" value="3" onchange="manageSeries()">
+						</label>Серия Пашена
+						<label>
+							<input type="checkbox" id="option4" value="4" onchange="manageSeries()">
+						</label>Серия Брекета
+						<label>
+							<input type="checkbox" id="option5" value="5" onchange="manageSeries()">
+						</label>Серия Пфунда
+					</p>
+				</form>
+
+				<canvas id="canvas" width="400" height="400"></canvas>
+
 			</div>
-			
-            <canvas id="canvas" width="400" height="400"></canvas>
-        </div>
+
+			<br/><br/><br/><br/><br/><br/>
+
+			<div id="equation-container">
+				<h1>Альфа- и бета-распады</h1>
+
+				<br/>
+
+				<span id="answer"></span>
+
+				<br/><br/>
+
+				<div class="flex-container">
+
+					<label for="element" class="select">
+						<input type="radio" name="list_element" value="not_changed" id="bg_element" checked />
+						<input type="radio" name="list_element" value="not_changed" id="element">
+						<label class="bg" for="bg_element"></label>
+						<div class="items">
+							<input type="radio" name="list_element" value="92, 238, U" id="element[0]" onclick="reaction()">
+							<label for="element[0]"><sup class="A">238</sup><sub class="Z">92</sub>U</label>
+
+							<input type="radio" name="list_element" value="88, 226, Ra" id="element[1]" onclick="reaction()">
+							<label for="element[1]"><sup class="A">226</sup><sub class="Z">88</sub>Ra</label>
+
+							<input type="radio" name="list_element" value="12, 24, Mg" id="element[2]" onclick="reaction()">
+							<label for="element[2]"><sup class="A">24</sup><sub class="Z">12</sub>Mg</label>
+
+							<input type="radio" name="list_element" value="93, 237, Np" id="element[3]" onclick="reaction()">
+							<label for="element[3]"><sup class="A">237</sup><sub class="Z">93</sub>Np</label>
+
+							<input type="radio" name="list_element" value="95, 243, Am" id="element[4]" onclick="reaction()">
+							<label for="element[4]"><sup class="A">243</sup><sub class="Z">95</sub>Am</label>
+
+							<input type="radio" name="list_element" value="98, 251, Cf" id="element[5]" onclick="reaction()">
+							<label for="element[5]"><sup class="A">251</sup><sub class="Z">98</sub>Cf</label>
+
+							<input type="radio" name="list_element" value="99, 252, Es" id="element[6]" onclick="reaction()">
+							<label for="element[6]"><sup class="A">252</sup><sub class="Z">99</sub>Es</label>
+
+							<input type="radio" name="list_element" value="87, 223, Fr" id="element[7]" onclick="reaction()">
+							<label for="element[7]"><sup class="A">223</sup><sub class="Z">87</sub>Fr</label>
+
+							<input type="radio" name="list_element" value="101, 258, Md" id="element[8]" onclick="reaction()">
+							<label for="element[8]"><sup class="A100">258</sup><sub class="Z">101</sub>Md</label>
+
+							<input type="radio" name="list_element" value="102, 261, No" id="element[9]" onclick="reaction()">
+							<label for="element[9]"><sup class="A100">261</sup><sub class="Z">102</sub>No</label>
+							<span id="text_element">Выберите элемент</span>
+						</div>
+					</label>
+
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<label for="type" class="select">
+						<input type="radio" name="list_type" value="not_changed" id="bg_type" checked />
+						<input type="radio" name="list_type" value="not_changed" id="type">
+						<label class="bg" for="bg_type"></label>
+						<div class="items">
+							<input type="radio" name="list_type" value="alpha" id="type[0]" onclick="reaction()">
+							<label for="type[0]">&#945-распад</label>
+							<input type="radio" name="list_type" value="beta" id="type[1]" onclick="reaction()">
+							<label for="type[1]">&#946-распад</label>
+							<span id="text_type">Выберите тип</span>
+						</div>
+					</label>
+
+				</div>
+			</div>
+		</div>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" src="js/touchToCursor.js"></script>
 
-        <script type="text/javascript">
+		<script type="text/javascript">
+			let table = [
+				{  z: 92, a: 238, name: 'U' },
+				{  z: 93, a: 238, name: 'Np' },
+				{  z: 90, a: 234, name: 'Th' },
 
-            const RAY_CENTER = { x: 200, y: 200 };
+				{  z: 86, a: 222, name: 'Rn' },
+				{  z: 89, a: 226, name: 'Ac' },
 
-            let cur_angle = Math.PI * 0.25;
-            let is_cur_down = false;
+				{  z: 10, a: 20, name: 'Ne' },
+				{  z: 13, a: 24, name: 'Al' },
 
-            let n1 = 1;
-            let n2 = 1.5;
+				{  z: 91, a: 233, name: 'Pa' },
+				{  z: 94, a: 237, name: 'Pu' },
 
-            function onLoad() {
-                setupCanvas();
-                updateCanvasSize();
-                redraw();
-            }
+				{  z: 96, a: 243, name: 'Cm' },
+				{  z: 93, a: 239, name: 'Np' },
 
-            function setupCanvas() {
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
+				{  z: 99, a: 251, name: 'Es' },
+				{  z: 96, a: 247, name: 'Cm' },
 
-                canvas.onmousedown = canvMouseDown;
-                canvas.onmouseup = canvMouseUp;
-                canvas.onmousemove = canvMouseMove;
-                TouchToCursor(canvas);
-            }
+				{  z: 100, a: 252, name: 'Fm' },
+				{  z: 97, a: 248, name: 'Bk' },
 
-            function updateCanvasSize() {
-                const canvas = document.getElementById('canvas');
+				{  z: 88, a: 223, name: 'Ra' },
+				{  z: 85, a: 219, name: 'At' },
 
-                let size = Math.min(window.innerWidth, window.innerHeight - 60);
+				{  z: 102, a: 258, name: 'No' },
+				{  z: 99, a: 254, name: 'Es' },
 
-                canvas.style.width = size + 'px';
-                canvas.style.height = size + 'px';
-            }
+				{  z: 103, a: 261, name: 'Lr' },
+				{  z: 100, a: 257, name: 'Fm' },
+			];
 
-            function redraw() {
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
+			function reaction() {
+				let values = document.querySelector('input[name="list_element"]:checked').value;
+				if (values !== "not_changed") {
+					let output;
+					let array = values.split(', ');
+					let answer;
+					if (array[0] >= 100) {
+						answer = "<sup class=\"A100\">";
+					} else answer = "<sup class=\"A\">";
+					answer += array[1] + "</sup><sub class=\"Z\">";
+					answer += array[0] + "</sub>" + array[2];
+					answer += "&nbsp;&nbsp; &#8594 &nbsp;&nbsp;";
+					if (document.querySelector('input[name="list_type"]:checked').value === "alpha") {
+						output = { z: array[0] - 2, a: array[1] - 4 }; //read from user & determine new
+						answer += "&#945 (<sup class=\"AHe\">4</sup>";
+						answer += "<sub class=\"Z\">2</sub class=\"Z\"> He&nbsp;) &nbsp;&nbsp; +";
+						for (let i = 0; i < table.length; i++) {
+							if (output.z == table[i].z && output.a == table[i].a) {
+								if (output.z >= 100) {
+									answer += "<sup class=\"A100\">";
+								} else answer += "<sup class=\"A\">";
+								answer += output.a + "</sup><sub class=\"Z\">";
+								answer += output.z + "</sub>";
+								answer += table[i].name;
+							}
+						}
+						document.getElementById("answer").innerHTML = answer;
+					} else if (document.querySelector('input[name="list_type"]:checked').value === "beta") {
+						output = { z: array[0] - (-1), a: array[1] }; //read from user & determine new
+						answer += "&#946 (<sup class=\"Ae\">0</sup>";
+						answer += "<sub class=\"Z\">-1</sub class=\"Z\"> e&nbsp;) &nbsp;&nbsp; + ";
+						for (let i = 0; i < table.length; i++) {
+							if (output.z == table[i].z && output.a == table[i].a) {
+								if (output.z >= 100) {
+									answer += "<sup class=\"A100\">";
+								} else answer += "<sup class=\"A\">";
+								answer += output.a + "</sup><sub class=\"Z\">";
+								answer += output.z + "</sub>";
+								answer += table[i].name;
+							}
+						}
+						document.getElementById("answer").innerHTML = answer;
+					} else {
+						document.getElementById("answer").innerHTML = "";
+					}
+				}
+			}
+		</script>
 
-                const refrAngle = calcRefrAngle(cur_angle, n1, n2);
+		<script type="text/javascript">
 
-                drawSubstances(ctx);
-                drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
-                drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
-                drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
-            }
+			const lineAlign = 3;
+			const detectPadding = 10;
+			let canvWidth = 400;
+			let canvHeight = 400;
+			let level1;
+			let level2;
+			let level3;
+			let level4;
+			let level5;
+			let level6;
+			let level7;
+			let levels = [];
+			let currElectPos = 0.9*canvHeight;
+			let currN = 1;
+			let generalMarg;
 
-            function drawSubstances(ctx) {
-                // substance 1
-                ctx.fillStyle = "#FFFFFF";
-                ctx.fillRect(0, 0, 400, 400);
+			function onLoad() {
+				setupCanvas();
+				updateCanvasSize();
+				redraw();
+				drawElectron(document.getElementById('canvas').getContext('2d'), 75, 0.9*canvHeight, 0.9*canvHeight);
+			}
 
-                ctx.font = "15px Arial";
-                ctx.fillStyle = "#222222";
-                ctx.fillText("n1", 10, 190);
+			function setupCanvas() {
+				const canvas = document.getElementById('canvas');
+				canvas.onmousedown = canvMouseDown;
+				canvas.onmouseup = canvMouseUp;
+				canvas.onmousemove = canvMouseMove;
+				TouchToCursor(canvas);
+			}
 
-                // substance 2
-                ctx.fillStyle = "#E5E5FF";
-                ctx.fillRect(0, 200, 400, 200);
+			function updateCanvasSize() {
+				const canvas = document.getElementById('canvas');
+				let size = Math.min(window.innerWidth, window.innerHeight - 60);
 
-                ctx.font = "15px Arial";
-                ctx.fillStyle = "#222222";
-                ctx.fillText("n2", 10, 390);
+				canvas.style.width = size + 'px';
+				canvas.style.height = size + 'px';
+			}
 
-                // line between
-                ctx.beginPath();
-                ctx.strokeStyle = "#000000";
-                ctx.moveTo(0, 200);
-                ctx.lineTo(400, 200);
-                ctx.stroke();
-                ctx.closePath();
+			function canvMouseDown(e) {
+				const ctx = document.getElementById('canvas').getContext('2d');
 
-                // dashed line
-                ctx.beginPath();
-                ctx.strokeStyle = "#000000";
-                ctx.setLineDash([5, 3]);
-                ctx.moveTo(200, 50);
-                ctx.lineTo(200, 350);
-                ctx.stroke();
-                ctx.closePath();
+				let canvas = e.target;
+				let rect = canvas.getBoundingClientRect();
+				let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+				let diff = detectPadding-lineAlign;
 
-                ctx.setLineDash([1, 0]);
-            }
+				if (clickY < level1 + diff && clickY > level1 - diff) {
+					drawElectron(ctx, 75, currElectPos, level1, () => {
+						if (1 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 1;
+					});
+					currElectPos = level1;
+				} else if (clickY < level2 + diff && clickY > level2 - diff) {
+					drawElectron(ctx, 75, currElectPos, level2, () => {
+						if (2 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 2;
+					});
+					currElectPos = level2;
+				} else if (clickY < level3 + diff && clickY > level3 - diff) {
+					drawElectron(ctx, 75, currElectPos, level3, () => {
+						if (3 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 3;
+					});
+					currElectPos = level3;
+				} else if (clickY < level4 + diff && clickY > level4 - diff) {
+					drawElectron(ctx, 75, currElectPos, level4, () => {
+						if (4 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 4;
+					});
+					currElectPos = level4;
+				} else if (clickY < level5 + diff && clickY > level5 - 5) {
+					drawElectron(ctx, 75, currElectPos, level5, () => {
+						if (5 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 5;
+					});
+					currElectPos = level5;
+				} else if (clickY < level6 + 5 && clickY > level6 - 2.5) {
+					drawElectron(ctx, 75, currElectPos, level6, () => {
+						if (6 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 6;
+					});
+					currElectPos = level6;
+				} else if (clickY < level7 + 2.5 && clickY > level7 - 2.5) {
+					drawElectron(ctx, 75, currElectPos, level7, () => {
+						if (7 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 7;
+					});
+					currElectPos = level7;
+				}
+			}
 
-            function calcSecondPoint(point, angle, length) {
-                const width1 = 0;
-                const height1 = -length;
-                const width2 = Math.cos(angle) * width1 - Math.sin(angle) * height1;
-                const height2 = Math.sin(angle) * width1 + Math.cos(angle) * height1;
+			function canvMouseUp(e) {
+				is_cur_down = false;
+			}
 
-                return { x: point.x - width2, y: point.y + height2 };
-            }
+			function canvMouseMove(e) {
+				let canvas = e.target;
+				let rect = canvas.getBoundingClientRect();
+				let clickX = (e.clientX - rect.left) / (canvas.clientWidth / canvas.width);
+				let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+			}
 
-            function drawAngledLine(ctx, point, angle, length, style = "#00AA00") {
-                if (isNaN(angle))
-                    return;
+			window.onload = function() {
+				onLoad();
+			};
 
-                const p2 = calcSecondPoint(point, angle, length);
+			document.addEventListener("deviceready", onLoad, false);
 
-                ctx.beginPath();
-                ctx.strokeStyle = style;
-                ctx.moveTo(p2.x, p2.y);
-                ctx.lineTo(point.x, point.y);
-                ctx.stroke();
-                ctx.closePath();
-            }
+			window.onresize = function(e) {
+				updateCanvasSize();
+			};
 
-            function drawArrow(ctx, point, angle, length, where, style = "#00AA00") {
-                if (isNaN(angle))
-                    return;
-                
-                drawAngledLine(ctx, point, angle, length, style);
-                if (where == 'in') {
-                    drawAngledLine(ctx, point, angle + 0.3, 14, style);
-                    drawAngledLine(ctx, point, angle - 0.3, 14, style);
-                }
-                else if (where == 'out') {
-                    const p2 = calcSecondPoint(point, angle, length);
-                    drawAngledLine(ctx, p2, angle + Math.PI + 0.3, 14, style);
-                    drawAngledLine(ctx, p2, angle + Math.PI - 0.3, 14, style);
-                }
-            }
+			// --------------------- do not touch what is higher ----------------------------
 
-            function calcRefrAngle(angle, n_1, n_2) {
-                if (angle > Math.PI / 2)
-                    [n_1, n_2] = [n_2, n_1];
+			function redraw() {
+				const canvas = document.getElementById('canvas');
+				const ctx = canvas.getContext('2d');
 
-                let fullReflAngle = Math.asin(n_2 / n_1);
-                //console.log("angle: " + angle + ", full refl: " + fullReflAngle);
-                if (Math.PI - angle > fullReflAngle)
-                    return NaN;
+				drawSubstances(ctx);
+			}
 
-                let result = Math.atan(Math.sin(angle) * n_1 / n_2);
-                if (angle < Math.PI / 2)
-                    result -= Math.PI;
-                else
-                    result = Math.PI * 2 - result;
-                return result;
-            }
+			function drawSubstances(ctx) {
 
-            function calcAngle(mouseX, mouseY) {
-                let dx = RAY_CENTER.x - mouseX;
-                let dy = RAY_CENTER.y - mouseY;
+				let currentLevel;
+				let currentN;
 
-                if (dx <= 0.001)
-                    dx = 0.001;
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fillRect(0, 0, canvWidth, canvHeight);
 
-                if (dy > 0)
-                    return Math.atan(dx / dy);
-                else if (dy == 0)
-                    return Math.PI / 2;
-                else
-                    return Math.PI / 2 - Math.atan(dy / dx);
-            }
+				//------------------------------------------------------------------------------
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=∞", 10, 20);
 
-            function canvMouseDown(e) {
-                is_cur_down = true;
-            }
+				let grd = ctx.createLinearGradient(0, canvHeight/100*4, 0, 0);
+				grd.addColorStop(0, "#b8b8b8");
+				grd.addColorStop(1, "white");
+				ctx.fillStyle = grd;
+				ctx.fillRect(40, 0, canvWidth-80, canvHeight*3/40);
 
-            function canvMouseUp(e) {
-                is_cur_down = false;
-            }
+				//------------------------------------------------------------------------------
+				currentLevel = 0.1*canvHeight;
+				level7=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=7", 10, currentLevel + lineAlign);
+				ctx.fillText("Область ионизации", canvWidth/5*2, canvHeight*0.05);
 
-            function canvMouseMove(e) {
-                let canvas = e.target;
-                let rect = canvas.getBoundingClientRect();
-                let clickX = (e.clientX - rect.left) / (canvas.clientWidth / canvas.width);
-                let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
 
-                if (is_cur_down) {
-                    cur_angle = calcAngle(clickX, clickY);
-                    redraw();
-                }
-            }
+				//------------------------------------------------------------------------------
+				currentN=1/53.69;
+				currentLevel+=currentN*0.8*canvHeight;
+				level6=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=6", 10, currentLevel + lineAlign);
 
-            window.onload = function() {
-                onLoad();
-            }
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
 
-            document.addEventListener("deviceready", onLoad, false);
+				//------------------------------------------------------------------------------
+				currentN*=36/25;
+				currentLevel+=currentN*0.8*canvHeight;
+				level5=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=5", 10, currentLevel + lineAlign);
 
-            window.onresize = function(e) {
-                updateCanvasSize();
-            }
-        </script>
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=25/16;
+				currentLevel+=currentN*0.8*canvHeight;
+				level4=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=4", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=16/9;
+				currentLevel+=currentN*0.8*canvHeight;
+				level3=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=3", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=9/4;
+				currentLevel+=currentN*0.8*canvHeight;
+				level2=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=2", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				level1=0.9*canvHeight;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=1", 10, 0.9*canvHeight + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, 0.9*canvHeight);
+				ctx.lineTo(canvWidth - 40, 0.9*canvHeight);
+				ctx.stroke();
+				ctx.closePath();
+
+				levels = [level1, level2, level3, level4, level5, level6, level7];
+			}
+
+			function drawElectron(ctx, xCord, yCord, yDest, _callback) {
+				redraw();
+				if (Math.round(yCord) != Math.round(yDest)) {
+					let gradient = ctx.createRadialGradient(xCord, yCord, 1, xCord, yCord, 6);
+					gradient.addColorStop(0, "#1a4ab8");
+					gradient.addColorStop(1, "#f4ffed");
+					ctx.arc(xCord, yCord, 4, 0, 2 * Math.PI);
+					ctx.fillStyle = gradient;
+					ctx.fill();
+					setTimeout(drawElectron, 3, ctx, xCord, Math.round(yCord + (yDest-yCord)/Math.abs(yDest-yCord)), Math.round(yDest), _callback);
+				} else {
+					let gradient = ctx.createRadialGradient(xCord, yCord, 1, xCord, yCord, 6);
+					gradient.addColorStop(0, "#1a4ab8");
+					gradient.addColorStop(1, "#f4ffed");
+					ctx.arc(xCord, yCord, 4, 0, 2 * Math.PI);
+					ctx.fillStyle = gradient;
+					ctx.fill();
+					_callback();
+				}
+			}
+
+			function manageSeries() {
+				redraw();
+				generalMarg = 120;
+				if (document.getElementById("option1").checked)
+					drawSeries(1, "#ff1e02");
+				if (document.getElementById("option2").checked)
+					drawSeries(2, "#032fff");
+				if (document.getElementById("option3").checked)
+					drawSeries(3, "#38ff00");
+				if (document.getElementById("option4").checked)
+					drawSeries(4, "#ff00f1");
+				if (document.getElementById("option5").checked)
+					drawSeries(5, "#00beff");
+			}
+
+			function drawSeries(n, color) {
+				const canvas = document.getElementById('canvas');
+				const ctx = canvas.getContext('2d');
+
+				let i = 6;
+				while (i >= n) {
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[i]);
+					ctx.lineTo(generalMarg, levels[n-1]);
+					ctx.stroke();
+					ctx.closePath();
+
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[n-1]);
+					ctx.lineTo(generalMarg-2, levels[n-1]-8);
+					ctx.stroke();
+					ctx.closePath();
+
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[n-1]);
+					ctx.lineTo(generalMarg+2, levels[n-1]-8);
+					ctx.stroke();
+					ctx.closePath();
+
+					generalMarg += 5;
+
+					i--;
+				}
+
+				generalMarg += 25;
+			}
+
+		</script>
     </body>
     </html>

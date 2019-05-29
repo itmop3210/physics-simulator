@@ -1,32 +1,63 @@
 #canvas {
-    border: 1px solid #000000;
-    width: 200px;
-    height: 200px;
+  border: 1px solid #000000;
+  width: 400px;
+  height: 400px;
 }
 
 #canvas-container {
-    position: absolute;
-    width: 100%;
-    text-align: center;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+#container {
+  flex-direction: column;
+  text-align: center;
+}
+
+#equation-container {
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  text-align: center;
 }
 
 .flex-container {
-    display: flex;
-	flex-direction: row;
+  display: inline-flex;
+  flex-direction: row;
+  alignment: center;
 }
 
 .AZ {
-	position:relative;
-}
-
-.A {
-	position:relative;
-	left: +11px;
-	top: -3px;
+  position:relative;
 }
 
 .Z {
-	position:relative;
+  position:relative;
+}
+
+.A {
+  position:relative;
+  top: -3px;
+  left: 9px;
+}
+
+.A100 {
+  position:relative;
+  top: -3px;
+  left: 14px;
+}
+
+.AHe {
+  position:relative;
+  top: -3px;
+  left: 5px;
+}
+
+.Ae {
+  position:relative;
+  top: -3px;
+  left: 8px;
 }
 
 input
@@ -34,25 +65,31 @@ input
   display: none;
 }
 
-#text
-{
+#text_element {
   position: absolute;
   display: block;
   top: 0;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 27px;
 }
 
-.select
-{
+#text_type {
+  position: absolute;
+  display: block;
+  top: 0;
+  padding-left: 20px;
+  padding-right: 54px;
+}
+
+.select {
   display: inline-block;
-  width: 160px;
+  width: 180px;
   height: 34px;
   line-height: 30px;
   position: relative;
 }
 
-.select:before
-{
+.select:before {
   content: ">";
   display: inline-block;
   background: white;
@@ -69,20 +106,20 @@ input
   cursor: pointer;
 }
 
-.select input[name="list"]:not(:checked) ~ #text
+.select input[name="list_element"]:not(:checked) ~ #text_element, .select input[name="list_type"]:not(:checked) ~ #text_type
 {
   color: black;
   background: white;
 }
 
-.select input[name="list"]:checked ~ #text
+.select input[name="list_element"]:checked ~ #text_element, .select input[name="list_type"]:checked ~ #text_type
 {
   background: transparent;
   color: transparent;
   z-index: 2;
 }
 
-#select:disabled ~ .items #text
+#select:disabled ~ .items #text_element, #select:disabled ~ .items #text_type
 {
   background: #eee;
 }
@@ -94,11 +131,11 @@ input
   position: absolute;
   border: 2px solid #ddd;
   overflow: hidden;
-  width: 160px;
+  width: 150px;
   cursor: pointer;
 }
 
-#select:not(:checked) ~ .items
+#element:not(:checked) ~ .items, #type:not(:checked) ~ .items
 {
   height: 30px;
 }
@@ -107,7 +144,7 @@ input
 {
   border-top: 2px solid #ddd;
   display: none;
-  padding-left: 10px;
+  padding-left: 0px;
   background: white;
 }
 
@@ -117,12 +154,12 @@ input
   cursor: pointer;
 }
 
-#select:checked ~ .items
+#element:checked ~ .items, #type:checked ~ .items
 {
   padding-top: 30px;
 }
 
-#select:checked ~ .items label
+#element:checked ~ .items label, #type:checked ~ .items label
 {
   display: block;
 }
@@ -134,7 +171,7 @@ input
   background: white;
 }
 
-#select:checked ~ .bg
+#element:checked ~ .bg, #type:checked ~ .bg
 {
   position: fixed;
   top: 0;
@@ -142,11 +179,10 @@ input
   bottom: 0;
   right: 0;
   z-index: 0;
-  background: rgba(0,0,0,0.4);
+  background: transparent;
 }
 
-a
-{
+a {
   display: block;
   width: 160px;
   text-align: center;
@@ -156,8 +192,43 @@ a
   border: 2px solid #ddd;
 }
 
-a:hover
-{
+a:hover {
   cursor: pointer;
   border-color: red;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  display: inline-block;
+  position: relative;
+  background-color: #919599;
+  border-radius: 6px;
+
+  /*padding: 4px;*/
+  padding-top: 2px;
+  margin-bottom: -2px;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+}
+
+input[type="checkbox"]:active, input[type="checkbox"]:checked:active {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type="checkbox"]:checked {
+  background-color: #919599;
+  border: 0px solid #000000;
+  color: #777;
+}
+
+input[type="checkbox"]:checked:after {
+  content: '\2714';
+  font-size: 10px;
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  color: #000000;
 }
