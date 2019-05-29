@@ -91,6 +91,13 @@ function drawVerticalDoubleArrow(fromx, fromy, tox, toy){
     drawArrow(fromx, fromy, tox, toy);
     drawArrow(fromx, fromy - 1, fromx, fromy);
 }
+function drawTriangle(x1,y1,x2,y2,x3,y3){
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.lineTo(x3,y3);
+    ctx.fill();
+}
 
 function drawFilter(){
     drawLine(OFFSET, MOFFSET, OFFSET, s1 - 4);
@@ -103,13 +110,18 @@ function drawScreen(){
 }
 
 function drawSpecial(){
+    let xtop = HEIGHT/2 - scr_x, xbot = HEIGHT/2 + scr_x;
     for (let i = 25; i < 300; i+=50){
         drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
     }
+   
+
+    ctx.fillStyle = " #ADFF2F";
+    drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, xtop, WIDTH-OFFSET, xbot);
+
+    ctx.fillStyle = "black";
     drawHorizontalDoubleArrow(OFFSET, HEIGHT - MOFFSET, WIDTH-OFFSET, HEIGHT - MOFFSET);
     drawDashedLine(MOFFSET, HEIGHT/2, WIDTH - MOFFSET, HEIGHT/2, [10,10]);
-
-    let xtop = HEIGHT/2 - scr_x, xbot = HEIGHT/2 + scr_x;
     drawDashedLine(OFFSET, s1, WIDTH - OFFSET, xtop, [5,5]);
     drawDashedLine(OFFSET, s2, WIDTH - OFFSET, xtop, [5,5]);
 
