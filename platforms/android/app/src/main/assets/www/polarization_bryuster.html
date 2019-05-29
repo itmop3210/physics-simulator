@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
         <!--<meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
-        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
         <title>Поляризация. Закон Брюстера</title>
 
     </head>
     <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="order-1 order-sm-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Назад</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-auto order-2">
+                <span class="navbar-brand mx-auto" style="font-size: 17px;">Поляризация</span>
+            </div>
+            <div class="order-3">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="polarization_info.html">Инфо</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <div id="canvas-container">
-            <h1>Поляризация. Закон Брюстера</h1>
-            <canvas id="canvas" width="400" height="400"></canvas>
+            <canvas id="canvas" width="400" height="400" style="margin-top: 30px;"></canvas>
         </div>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
