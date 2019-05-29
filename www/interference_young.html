@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Опыт Юнга</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script type="text/javascript" src="js/interference_young.js"></script>
@@ -9,16 +10,17 @@
 <body>
 	<h1>Интерференция. Опыт Юнга.</h1>
 	<form>
-		<input type="text" id="lambda" placeholder="Длина волны">
-		<input type="text" id="hole_height" placeholder="Расстояние между отверстиями">
-		<input type="text" id="source_width" placeholder="Расстояние от источника до панели с щелями ">
-		<input type="text" id="screen_width" placeholder="Расстояние от панели до экрана ">
+		n=<input type="text" id="n" placeholder="n">мм
+		λ=<input type="text" id="lambda" placeholder="lambda, нм">мм
+		h=<input type="text" id="hole_height" placeholder="h, мм">мм
+		x=<input type="text" id="screen_height" placeholder="X, мм">мм
+		l=<input type="text" id="screen_width" placeholder="l, мм">мм
 		
 		<input type="button" value="Построить" id="submit" onClick="updateValues()">
 	</form>
 
 	<div id="canvas-container">
-		<canvas id="canvas" width="400" height="300"></canvas>
+		<canvas id="canvas" width="410" height="350"></canvas>
 	</div>
 </body>
 </html>

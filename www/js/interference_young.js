@@ -1,8 +1,8 @@
-const TOP_ALLIGN = 100, WIDTH = 334;
-let lambda, hole_height=0.5, screen_width = 4, source_width = 3;
+const TOP_ALLIGN = 100, HEIGHT = 300, WIDTH = 400, OFFSET=30, MOFFSET = 3;
+let lambda = 500, ds=2, l = 1000, x = 3, n = 1;
 let canvas, ctx;
-let d, l, s1, s2, delta, x;
-// TODO: is it necessary to support changable n?
+let scr_l, scr_x, s1, s2;
+let k;
 
 window.onload = function() {
     canvas = document.getElementById('canvas');
@@ -23,9 +23,8 @@ function updateCanvasSize() {
 }
 
 function redrawCanvas(){
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, 400, 300);
-    drawSource();
+    ctx.fillStyle = "#E4E4E4";
+    ctx.fillRect(0, 0, 410, 350);
     drawFilter();
     drawScreen();
     drawSpecial();
@@ -54,94 +53,121 @@ function drawArrow(fromx, fromy, tox, toy){
     var headlen = 6;
     var angle = Math.atan2(toy-fromy,tox-fromx);
 
-    //starting path of the arrow from the start square to the end square and drawing the stroke
     ctx.beginPath();
     ctx.moveTo(fromx, fromy);
     ctx.lineTo(tox, toy);
-    ctx.strokeStyle = "#black";
+    ctx.strokeStyle = "#000000";
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    //starting a new path from the head of the arrow to one of the sides of the point
     ctx.beginPath();
     ctx.moveTo(tox, toy);
     ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
 
-    //path from the side point of the arrow, to the other side point
     ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),toy-headlen*Math.sin(angle+Math.PI/7));
 
-    //path from the side point back to the tip of the arrow, and then again to the opposite side point
     ctx.lineTo(tox, toy);
     ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
 
-    //draws the paths created above
-    ctx.strokeStyle = "#black";
+    ctx.strokeStyle = "#000000";
     ctx.lineWidth = 2;
     ctx.stroke();
-    ctx.fillStyle = "#black";
+    ctx.fillStyle = "#000000";
     ctx.fill();
 }
 function drawHorizontalDoubleArrow(fromx, fromy, tox, toy){
     drawArrow(fromx, fromy, tox, toy);
     drawArrow(fromx + 1, fromy, fromx, toy);
 }
-
-function drawSource(){
-    drawLine(33, 100, 33, 145);
-    drawLine(33, 155, 33, 200);
-
-    drawArrow(0, 120, 32, 120);
-    drawArrow(0, 150, 32, 150);
-    drawArrow(0, 180, 32, 180);
+function drawVerticalDoubleArrow(fromx, fromy, tox, toy){
+    drawArrow(fromx, fromy, tox, toy);
+    drawArrow(fromx, fromy - 1, fromx, fromy);
 }
 
 function drawFilter(){
-    drawLine(d + 33, 50, d + 33, s2 - 3);
-    drawLine(d + 33, s2 + 3, d + 33, s1 - 3);
-    drawLine(d + 33, s1 + 3, d + 33, 250);
+    drawLine(OFFSET, MOFFSET, OFFSET, s1 - 4);
+    drawLine(OFFSET, s1 + 4, OFFSET, s2 - 4);
+    drawLine(OFFSET, s2 + 4, OFFSET, HEIGHT - MOFFSET);
 }
 
 function drawScreen(){
-    drawLine(370, 30, 370, 270);
+    drawLine(WIDTH - OFFSET, MOFFSET, WIDTH - OFFSET, HEIGHT - MOFFSET);
 }
 
 function drawSpecial(){
-    drawHorizontalDoubleArrow(33, 270, d + 33, 270);
-    drawHorizontalDoubleArrow(d + 33, 270, d + l + 33, 270);
-    let tempx = x  * WIDTH / (source_width + screen_width);
-    let xtop = 150 - tempx, xbot = 150 + tempx;
-    drawDashedLine(33, 150, 370, xtop, [5, 5]);
-    drawDashedLine(33, 150, 370, xbot, [5, 5]);
-    // drawDashedLine(d + 33, 150, 370, 150, [5, 5]);
-    drawDashedLine(d + 33, s1, 370, xtop, [5, 5]);
-    drawDashedLine(d + 33, s2, 370, xbot, [5, 5]);
+    for (let i = 25; i < 300; i+=50){
+        drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
+    }
+    drawHorizontalDoubleArrow(OFFSET, HEIGHT - MOFFSET, WIDTH-OFFSET, HEIGHT - MOFFSET);
+    drawDashedLine(MOFFSET, HEIGHT/2, WIDTH - MOFFSET, HEIGHT/2, [10,10]);
 
-    drawArrow(d + 40, s2 + 4, d + 40, s1 - 4);
-    drawArrow(d + 40, s2 + 4, d + 40, s2 + 3);
+    let xtop = HEIGHT/2 - scr_x, xbot = HEIGHT/2 + scr_x;
+    drawDashedLine(OFFSET, s1, WIDTH - OFFSET, xtop, [5,5]);
+    drawDashedLine(OFFSET, s2, WIDTH - OFFSET, xtop, [5,5]);
 
+    drawDashedLine(OFFSET, s2, WIDTH - OFFSET, xbot, [5,5]);
+    drawDashedLine(OFFSET, s1, WIDTH - OFFSET, xbot, [5,5]);
+
+    drawVerticalDoubleArrow(OFFSET + 2* MOFFSET, s2 - MOFFSET, OFFSET + 2*MOFFSET, s1 + MOFFSET);
+    drawVerticalDoubleArrow(WIDTH - OFFSET + 2*MOFFSET, HEIGHT/2  , WIDTH - OFFSET + 2*MOFFSET, xtop);
+    
     ctx.font = "16px Times New Roman";
+    ctx.fillStyle = "red";
+    ctx.fillText('h', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET); 
+    ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2); 
+    ctx.fillText('l', WIDTH/2, HEIGHT-2*MOFFSET); 
+    ctx.fillText('S1', 2*MOFFSET, s1    );
+    ctx.fillText('S2', 2*MOFFSET, s2);
+
     ctx.fillStyle = "black";
-    ctx.fillText('d', d / 2 + 33, 285); 
-    ctx.fillText('l', l / 2 + 33 + d, 285); 
-    ctx.fillText('S', d + 45, 150+5); 
+    ctx.fillText('n = ', OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
+
+    ctx.fillText('λ = ', 3*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(lambda, 4*OFFSET - MOFFSET, HEIGHT + OFFSET);
+    ctx.fillText('нм', 5*OFFSET - MOFFSET, HEIGHT + OFFSET);
 }
 
 function updateValues(){
-    lambda = parseInt(document.getElementById("lambda").value);
-    hole_height = parseFloat(document.getElementById("hole_height").value);
-    source_width = parseInt(document.getElementById("source_width").value);
-    screen_width = parseInt(document.getElementById("screen_width").value);
+    lambda = parseFloat(document.getElementById("lambda").value);
+    ds = parseFloat(document.getElementById("hole_height").value);
+    n = parseFloat(document.getElementById("n").value);
+    x = parseFloat(document.getElementById("screen_height").value);
+    l = parseFloat(document.getElementById("screen_width").value);
     calculateValues();
 }
 
 function calculateValues(){
-    delta = screen_width / hole_height * lambda;
-    d = WIDTH * source_width / (source_width + screen_width);
-    l = WIDTH * screen_width / (source_width + screen_width);
-    s1 = 150 + (hole_height / 2) * WIDTH / (source_width + screen_width);
-    s2 = 150 - (hole_height / 2) * WIDTH / (source_width + screen_width);
-    x = (hole_height * (source_width + screen_width))/(2 * source_width);
-    //TODO: cycle to draw interferation image
-    // or setLineDash()
+    if (x > (ds/2))
+        k = (HEIGHT/2 - OFFSET) / x;
+    else
+        k = (HEIGHT/2 - OFFSET) / (ds/2)
+
+    s1 = (HEIGHT / 2) - (ds / 2) * k;
+    s2 = (HEIGHT / 2) + (ds / 2) * k;
+    scr_x = x * k;
+    
+
     redrawCanvas();
+    
+    ctx.fillStyle = "blue";
+    ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
+    
+    let dx = lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
+    ctx.fillStyle = "white";
+    ctx.fillRect(start, HEIGHT/2 - dx/2, w, dx);
+    for(let i = dx/2, white = true; i < scr_x; i+=dx){
+        if (white == true)
+            ctx.fillStyle = "black";
+        else   
+            ctx.fillStyle = "white";
+
+        white = !white;
+
+        ctx.fillRect(start, HEIGHT/2 - i - dx, w, dx);
+        ctx.fillRect(start, HEIGHT/2 + i, w, dx);
+
+    }
+
+
 }
