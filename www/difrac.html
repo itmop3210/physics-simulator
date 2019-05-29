@@ -34,8 +34,14 @@
 </div>
 <br>
 <div style="text-align: center;">
-<span id="warntext" style="color: red;"></span>
+    Radius = <input id="n1_in" type="number" value="2" step="2" max="10" onchange="onChangeR()"><br><br>
+
+    <span id="warntext" style="color: red;"></span>
 </div>
+
+
+
+
 <div style="height: 100px"></div>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script type="text/javascript" src="js/touchToCursor.js"></script>
@@ -44,7 +50,7 @@
     function onLoad() {
         setupCanvas();
         updateCanvasSize();
-        redraw();
+        firstdraw();
     }
     function setupCanvas() {
         const canvas = document.getElementById('canvas');
@@ -60,14 +66,23 @@
         canvas.style.width = size + 'px';
         canvas.style.height = size + 'px';
     }
+    function firstdraw() {
+        const canvas = document.getElementById('canvas');
+        window.ctx = canvas.getContext("2d");
+        drawSubstances(ctx);
+        drawStar(90,200,8,9,3);
+        drawLight(90,200);
+        drawObstacle(2);
+        drawcenter(2);
+    }
     function redraw() {
         const canvas = document.getElementById('canvas');
         window.ctx = canvas.getContext("2d");
         drawSubstances(ctx);
         drawStar(90,200,8,9,3);
         drawLight(90,200);
-        drawObstacle(10);
-        drawcenter();
+        // drawObstacle(2);
+        // drawcenter();
     }
     function drawSubstances(ctx) {
         ctx.fillStyle = "#818181";
@@ -140,23 +155,391 @@
             ctx.fill();
 
     }
-    function drawcenter() {
-        ctx.beginPath();
-        ctx.arc(290, 151, 3, 0, 2*Math.PI, false);
-        ctx.fillStyle = "#040002";
-        ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "#040002";
-        ctx.stroke();
-    }
-    function drawSecondPoint(point, angle, length) {
-        const width1 = 0;
-        const height1 = -length;
-        const width2 = Math.cos(angle) * width1 - Math.sin(angle) * height1;
-        const height2 = Math.sin(angle) * width1 + Math.cos(angle) * height1;
+    function drawcenter(rad) {
+        let r = rad;
+        if (r === 10) {
+            ctx.beginPath();
+            ctx.arc(290, 150, 30, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
 
-        return { x: point.x - width2, y: point.y + height2 };
+            ctx.beginPath();
+            ctx.arc(290, 150, 27, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 24, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 21, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 18, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 15, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 12, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 10, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 7, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 2, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#f0ff00";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#9c994d";
+            ctx.stroke();
+        }
+        else if (r === 8) {
+            ctx.beginPath();
+            ctx.arc(290, 150, 24, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 22, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 24, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 20, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 18, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 16, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 14, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 12, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 9, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 6, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 1.7, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#f0ff00";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#9c994d";
+            ctx.stroke();
+        }
+        else if (r === 6) {
+            ctx.beginPath();
+            ctx.arc(290, 150, 20, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 17, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 14, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 12, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 10, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 8, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 6, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 4, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 1, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#f0ff00";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#9c994d";
+            ctx.stroke();
+        }
+        else if (r === 4) {
+            ctx.beginPath();
+
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 13, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 11, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 9, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 7, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 3, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 0.7, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#f0ff00";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#9c994d";
+            ctx.stroke();
+        }
+        else if (r === 2) {
+            ctx.beginPath();
+
+
+            ctx.beginPath();
+            ctx.arc(290, 150, 7, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 5.5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 4, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#b7b103";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#b7b103";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 2.5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#505050";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#505050";
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(290, 151, 0.3, 0, 2 * Math.PI, false);
+            ctx.fillStyle = "#f0ff00";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#9c994d";
+            ctx.stroke();
+        }
+
+
     }
+
+    // function drawEllipse(x, y, a, b,c) {
+    //     ctx.save();
+    //     ctx.beginPath();
+    //     ctx.translate(x, y);
+    //     ctx.scale(a / b, 1);
+    //     ctx.arc(0, 0, b, 0, Math.PI * 2, true);
+    //     ctx.fillStyle=color;
+    //     ctx.restore();
+    //     ctx.closePath();
+    //
+    //     if (c === 1) {
+    //
+    //         ctx.fillStyle = "#aaaaaa";
+    //
+    //     } else if (c === 2) {
+    //         ctx.fillStyle = "#aaaaaa";
+    //
+    //     } else if (c === 3) {
+    //         ctx.strokeStyle = "#bebec2";
+    //     }
+    //     ctx.stroke();
+    //     ctx.fill();
+    // }
+
 
 
     function canvMouseDown(e) {
@@ -179,39 +562,23 @@
         }
     }
 
-    function onChangeN() {
+    function onChangeR() {
         let n1_in = document.getElementById('n1_in');
-        let n2_in = document.getElementById('n2_in');
+        let n1 = parseInt(n1_in.value);
+        let errMsg = "";
+        redraw();
+        drawObstacle(n1);
+        drawcenter(n1);
 
-        let n_1 = parseFloat(n1_in.value);
-        let n_2 = parseFloat(n2_in.value);
-        if (!isNaN(n_1))
-            n1 = n_1;
-        else
-            n1_in.value = n1;
+        if ((n1%2===1))
+        {
+            errMsg += + "Радиус должен быть четным от 2 до 10<br>";
 
-        if (!isNaN(n_2))
-            n2 = n_2;
-        else
-            n2_in.value = n2;
+            document.getElementById('warntext').innerHTML = errMsg;
 
-        if (n1 > n2) {
-            const tmp = n1;
-            n1 = n2;
-            n2 = tmp;
 
-            n1_in.value = n1;
-            n2_in.value = n2;
         }
 
-        let errMsg = "";
-        if (n1 < 1)
-            errMsg += "Показатель преломления n1 меньше единицы!<br>";
-        if (n2 < 1)
-            errMsg += "Показатель преломления n2 меньше единицы!<br>";
-        document.getElementById('warntext').innerHTML = errMsg;
-
-        redraw();
     }
 
     window.onload = function() {
