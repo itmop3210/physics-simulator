@@ -28,34 +28,19 @@
         </ul>
     </div>
 </nav>
-
 <br>
-
 <div id="canvas-container">
     <canvas id="canvas" width="400" height="400"></canvas>
 </div>
-
 <br>
-
 <div style="text-align: center;">
-
-    <span id="warntext" style="color: red;"></span>
+<span id="warntext" style="color: red;"></span>
 </div>
-
 <div style="height: 100px"></div>
-
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script type="text/javascript" src="js/touchToCursor.js"></script>
-
 <script type="text/javascript">
-
-    const RAY_CENTER = { x: 200, y: 200 };
-
-
     let is_cur_down = false;
-
-
-
     function onLoad() {
         setupCanvas();
         updateCanvasSize();
@@ -64,7 +49,6 @@
     function setupCanvas() {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-
         canvas.onmousedown = canvMouseDown;
         canvas.onmouseup = canvMouseUp;
         canvas.onmousemove = canvMouseMove;
@@ -83,36 +67,13 @@
         drawStar(90,200,8,9,3);
         drawLight(90,200);
         drawObstacle(10);
-
+        drawcenter();
     }
-
     function drawSubstances(ctx) {
-        // substance 1
         ctx.fillStyle = "#818181";
         ctx.fillRect(0, 0, 400, 400);
-
-        // ctx.font = "15px Arial";
-        // ctx.fillStyle = "#222222";
-        // ctx.fillText("n1 = " + n1.toString().replace('.', ','), 10, 190);
-        //
-        // // substance 2
-        // // ctx.fillStyle = "#E5E5FF";
-        // // ctx.fillRect(0, 200, 400, 200);
-        //
-        // ctx.font = "15px Arial";
-        // ctx.fillStyle = "#222222";
-        // ctx.fillText("n2 = " + n2.toString().replace('.', ','), 10, 390);
-
-        // line between
-        // ctx.beginPath();
-        // ctx.strokeStyle = "#000000";
-        // ctx.moveTo(0, 200);
-        // ctx.lineTo(400, 200);
-        // ctx.stroke();
-        // ctx.closePath();
         ctx.beginPath();
         ctx.strokeStyle = "#040002";
-
         ctx.moveTo(250, 100);
         ctx.lineTo(250, 170);
         ctx.lineTo(330,200);
@@ -179,6 +140,24 @@
             ctx.fill();
 
     }
+    function drawcenter() {
+        ctx.beginPath();
+        ctx.arc(290, 151, 3, 0, 2*Math.PI, false);
+        ctx.fillStyle = "#040002";
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#040002";
+        ctx.stroke();
+    }
+    function drawSecondPoint(point, angle, length) {
+        const width1 = 0;
+        const height1 = -length;
+        const width2 = Math.cos(angle) * width1 - Math.sin(angle) * height1;
+        const height2 = Math.sin(angle) * width1 + Math.cos(angle) * height1;
+
+        return { x: point.x - width2, y: point.y + height2 };
+    }
+
 
     function canvMouseDown(e) {
         is_cur_down = true;
