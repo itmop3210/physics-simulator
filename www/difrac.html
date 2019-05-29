@@ -82,6 +82,7 @@
         drawSubstances(ctx);
         drawStar(90,200,8,9,3);
         drawLight(90,200);
+        drawObstacle(10);
 
     }
 
@@ -147,7 +148,21 @@
         ctx.stroke();
         ctx.fillStyle="#ebfa12";
         ctx.fill();}
+       function drawObstacle(rad) {
+        var r = rad ;
+
+        ctx.beginPath();
+           ctx.beginPath();
+           ctx.arc(160, 180, r, 0, 2*Math.PI, false);
+           ctx.fillStyle = "#040002";
+           ctx.fill();
+           ctx.lineWidth = 1;
+           ctx.strokeStyle = "#040002";
+           ctx.stroke();
+
+       }
         function drawLight(cx,cy){
+
             var x=cx;
             var y=cy;
             ctx.beginPath();
