@@ -5,13 +5,34 @@
         <!--<meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
-        <link rel="stylesheet" type="text/css" href="css/nuclear.css">
-        <title>Ядерная физика</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/nuclear.css">
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/shared-style.css">
+	<title>Ядерная физика. Строение атома.</title>
 
     </head>
     <body>
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+			<div class="order-1 order-sm-0">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Назад</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mx-auto order-2">
+				<span class="navbar-brand mx-auto" style="font-size: 17px;">Ядерная физика. Строение атома.</span>
+			</div>
+			<div class="order-3">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="nuclear_info.html">Инфо</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
 		<div id="container">
 			<div id="canvas-container">
 				<h1>Энергетические уровни</h1>
@@ -24,19 +45,19 @@
 					<p class="flex-container">
 						<label>
 							<input type="checkbox" id="option1" value="1" onchange="manageSeries()">
-						</label>Серия Лаймана
+						</label>&nbsp;Серия Лаймана&nbsp;&nbsp;
 						<label>
 							<input type="checkbox" id="option2" value="2" onchange="manageSeries()">
-						</label>Серия Бальмера
+						</label>&nbsp;Серия Бальмера&nbsp;&nbsp;
 						<label>
 							<input type="checkbox" id="option3" value="3" onchange="manageSeries()">
-						</label>Серия Пашена
+						</label>&nbsp;Серия Пашена&nbsp;&nbsp;
 						<label>
 							<input type="checkbox" id="option4" value="4" onchange="manageSeries()">
-						</label>Серия Брекета
+						</label>&nbsp;Серия Брекета&nbsp;&nbsp;
 						<label>
 							<input type="checkbox" id="option5" value="5" onchange="manageSeries()">
-						</label>Серия Пфунда
+						</label>&nbsp;Серия Пфунда
 					</p>
 				</form>
 

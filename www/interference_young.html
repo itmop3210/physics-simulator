@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Опыт Юнга</title>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="js/interference_young.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+	<link rel="stylesheet" type="text/css" href="css/shared-style.css">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+		<div class="order-1 order-sm-0">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="index.html">Назад</a>
+				</li>
+			</ul>
+		</div>
+		<div class="mx-auto order-2">
+			<span class="navbar-brand mx-auto" style="font-size: 17px;">Опыт Юнга</span>
+		</div>
+		<div class="order-3">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="interference_info.html">Инфо</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<br>
+
+	<div style="text-align: center;">
+		<form>
+			<table style="width: 100%;">
+				<tr><td>
+					n=<input type="text" id="n" placeholder="Преломление среды">
+				</td></tr>
+				<tr><td>
+					λ=<input type="text" id="lambda" placeholder="lambda, нм">нм
+				</td></tr>
+				<tr><td>
+					h=<input type="text" id="hole_height" placeholder="h, мм">мм
+				</td></tr>
+				<tr><td>
+					x=<input type="text" id="screen_height" placeholder="X, мм">мм
+				</td></tr>
+				<tr><td>
+					l=<input type="text" id="screen_width" placeholder="l, мм">мм
+				</td></tr>
+				<tr><td>
+					<input type="button" value="Построить" id="submit" onClick="updateValues()">
+				</td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="canvas-container">
+		<canvas id="canvas" width="410" height="350"></canvas>
+	</div>
+</body>
+</html>

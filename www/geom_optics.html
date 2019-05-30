@@ -1,20 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-        <!--<meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
         <title>Геометрическая оптика</title>
-
     </head>
     <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="order-1 order-sm-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Назад</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-auto order-2">
+                <span class="navbar-brand mx-auto" style="font-size: 17px;">Геометрическая оптика</span>
+            </div>
+            <div class="order-3">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="geom_optics_info.html">Инфо</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <br>
+
         <div id="canvas-container">
-            <h1>Геометрическая оптика</h1>
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
+
+        <br>
+
+        <div style="text-align: center;">
+            n1 = <input id="n1_in" type="number" value="1" step="0.0001" onchange="onChangeN()"><br><br>
+            n2 = <input id="n2_in" type="number" value="1.5" step="0.0001" onchange="onChangeN()"><br><br>
+            <span id="warntext" style="color: red;"></span>
+        </div>
+
+        <div style="height: 100px"></div>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" src="js/touchToCursor.js"></script>
@@ -73,7 +102,7 @@
 
                 ctx.font = "15px Arial";
                 ctx.fillStyle = "#222222";
-                ctx.fillText("n1", 10, 190);
+                ctx.fillText("n1 = " + n1.toString().replace('.', ','), 10, 190);
 
                 // substance 2
                 ctx.fillStyle = "#E5E5FF";
@@ -81,7 +110,7 @@
 
                 ctx.font = "15px Arial";
                 ctx.fillStyle = "#222222";
-                ctx.fillText("n2", 10, 390);
+                ctx.fillText("n2 = " + n2.toString().replace('.', ','), 10, 390);
 
                 // line between
                 ctx.beginPath();
@@ -192,6 +221,41 @@
                     cur_angle = calcAngle(clickX, clickY);
                     redraw();
                 }
+            }
+
+            function onChangeN() {
+                let n1_in = document.getElementById('n1_in');
+                let n2_in = document.getElementById('n2_in');
+
+                let n_1 = parseFloat(n1_in.value);
+                let n_2 = parseFloat(n2_in.value);
+                if (!isNaN(n_1))
+                    n1 = n_1;
+                else
+                    n1_in.value = n1;
+
+                if (!isNaN(n_2))
+                    n2 = n_2;
+                else
+                    n2_in.value = n2;
+
+                if (n1 > n2) {
+                    const tmp = n1;
+                    n1 = n2;
+                    n2 = tmp;
+
+                    n1_in.value = n1;
+                    n2_in.value = n2;
+                }
+
+                let errMsg = "";
+                if (n1 < 1)
+                    errMsg += "Показатель преломления n1 меньше единицы!<br>";
+                if (n2 < 1)
+                    errMsg += "Показатель преломления n2 меньше единицы!<br>";
+                document.getElementById('warntext').innerHTML = errMsg;
+
+                redraw();
             }
 
             window.onload = function() {

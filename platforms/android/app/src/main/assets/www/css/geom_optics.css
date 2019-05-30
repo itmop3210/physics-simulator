@@ -5,7 +5,7 @@
 }
 
 #canvas-container {
-    position: absolute;
     width: 100%;
     text-align: center;
+    top: 60px;
 }
