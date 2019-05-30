@@ -563,21 +563,23 @@
     }
 
     function onChangeR() {
-        let n1_in = document.getElementById('n1_in');
+                let n1_in = document.getElementById('n1_in');
         let n1 = parseInt(n1_in.value);
         let errMsg = "";
-        redraw();
-        drawObstacle(n1);
-        drawcenter(n1);
-
-        if ((n1%2===1))
+        if ((n1%2===1)||(n1>10)||(n1<2))
         {
-            errMsg += + "Радиус должен быть четным от 2 до 10<br>";
+            errMsg +=  "Радиус должен быть четным от 2 до 10<br>";
 
             document.getElementById('warntext').innerHTML = errMsg;
 
 
         }
+        else {
+        redraw();
+        drawObstacle(n1);
+        drawcenter(n1);
+
+            }
 
     }
 

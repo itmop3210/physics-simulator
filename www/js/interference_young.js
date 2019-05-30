@@ -170,7 +170,16 @@ function calculateValues(){
 
     redrawCanvas();
 
-    ctx.fillStyle = "blue";
+    if (lambda < 390) ctx.fillStyle="Gray";
+    if (lambda >=390 && lambda < 440) ctx.fillStyle="purple";
+    if (lambda >=440 && lambda < 480) ctx.fillStyle="blue";
+    if (lambda >=480 && lambda < 510) ctx.fillStyle="#00BFFF";
+    if (lambda >=510 && lambda < 550) ctx.fillStyle="green"
+    if (lambda >=550 && lambda < 575) ctx.fillStyle="YellowGreen"
+    if (lambda >=575 && lambda < 585) ctx.fillStyle="yellow"
+    if (lambda >=585 && lambda < 620) ctx.fillStyle="orange"
+    if (lambda >=620 && lambda < 770) ctx.fillStyle="red"
+    if (lambda >= 770) ctx.fillStyle="Gray";
     ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
 
     let dx = n * lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
