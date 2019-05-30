@@ -58,3 +58,6 @@ resources/signing
 #vim
 *.swp
 *.swo
+
+#No comments
+.idea
