@@ -25,6 +25,13 @@
 .flex-container {
   padding-left: 17px;
   display: inline-flex;
+  flex-direction: column;
+  alignment: center;
+}
+
+.flex-series {
+  padding-left: 17px;
+  display: inline-flex;
   flex-direction: row;
   alignment: center;
 }
@@ -87,6 +94,7 @@ input
   display: inline-block;
   width: 200px;
   height: 34px;
+  padding-bottom: 117px;
   line-height: 30px;
   position: relative;
 }

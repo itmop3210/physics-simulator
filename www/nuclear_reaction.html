@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <div class="mx-auto order-2">
-                <span class="navbar-brand mx-auto" style="font-size: 17px;">Ядерная физика. Альфа- и бета-распады.</span>
+                <span class="navbar-brand mx-auto" style="font-size: 17px;">Ядерные распады</span>
             </div>
             <div class="order-3">
                 <ul class="navbar-nav ml-auto">
@@ -46,6 +46,18 @@
                 <br/><br/>
 
                 <div class="flex-container">
+                    <label for="type" class="select">
+                        <input type="radio" name="list_type" value="not_changed" id="bg_type" checked />
+                        <input type="radio" name="list_type" value="not_changed" id="type">
+                        <label class="bg" for="bg_type"></label>
+                        <div class="items">
+                            <input type="radio" name="list_type" value="alpha" id="type[0]" onclick="reaction()">
+                            <label for="type[0]">&#945-распад</label>
+                            <input type="radio" name="list_type" value="beta" id="type[1]" onclick="reaction()">
+                            <label for="type[1]">&#946-распад</label>
+                            <span id="text_type">Выберите тип&nbsp;&nbsp;&#9660;</span>
+                        </div>
+                    </label>
 
                     <label for="element" class="select">
                         <input type="radio" name="list_element" value="not_changed" id="bg_element" checked />
@@ -82,21 +94,6 @@
                             <input type="radio" name="list_element" value="102, 261, No" id="element[9]" onclick="reaction()">
                             <label for="element[9]"><sup class="A100">261</sup><sub class="Z">102</sub>No</label>
                             <span id="text_element">Выберите элемент&nbsp;&nbsp;&#9660;</span>
-                        </div>
-                    </label>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <label for="type" class="select">
-                        <input type="radio" name="list_type" value="not_changed" id="bg_type" checked />
-                        <input type="radio" name="list_type" value="not_changed" id="type">
-                        <label class="bg" for="bg_type"></label>
-                        <div class="items">
-                            <input type="radio" name="list_type" value="alpha" id="type[0]" onclick="reaction()">
-                            <label for="type[0]">&#945-распад</label>
-                            <input type="radio" name="list_type" value="beta" id="type[1]" onclick="reaction()">
-                            <label for="type[1]">&#946-распад</label>
-                            <span id="text_type">Выберите тип&nbsp;&nbsp;&#9660;</span>
                         </div>
                     </label>
 
