@@ -17,12 +17,13 @@
 
 #equation-container {
   flex-direction: column;
-  position: absolute;
+  position: relative;
   width: 100%;
   text-align: center;
 }
 
 .flex-container {
+  padding-left: 17px;
   display: inline-flex;
   flex-direction: row;
   alignment: center;
@@ -70,42 +71,42 @@ input
   position: absolute;
   display: block;
   top: 0;
-  padding-left: 20px;
-  padding-right: 27px;
+  padding-left: 10px;
+  padding-right: 11.7px;
 }
 
 #text_type {
   position: absolute;
   display: block;
   top: 0;
-  padding-left: 20px;
-  padding-right: 54px;
+  padding-left: 26.183px;
+  padding-right: 30px;
 }
 
 .select {
   display: inline-block;
-  width: 180px;
+  width: 200px;
   height: 34px;
   line-height: 30px;
   position: relative;
 }
 
-.select:before {
+/*.select:before {
   content: ">";
   display: inline-block;
   background: white;
-  position: relative;
-  right: 3px;
+  position: absolute;
+  right: -5px;
   top: 2px;
   z-index: 2;
   width: 30px;
   height: 26px;
   text-align: center;
   line-height: 26px;
-  border: 2px solid #ddd;
+  !*border: 2px solid #ddd;*!
   transform: rotate(90deg);
   cursor: pointer;
-}
+}*/
 
 .select input[name="list_element"]:not(:checked) ~ #text_element, .select input[name="list_type"]:not(:checked) ~ #text_type
 {
@@ -127,23 +128,24 @@ input
 
 .items
 {
-  display: inline-block;
-  min-height: 30px;
+  display: block;
+  min-height: 0;
   position: absolute;
-  border: 2px solid #ddd;
+  /*border: 2px solid #ddd;*/
   overflow: hidden;
-  width: 187px;
+  width: 180px;
   cursor: pointer;
 }
 
 #element:not(:checked) ~ .items, #type:not(:checked) ~ .items
 {
-  height: 30px;
+  height: 33px;
 }
 
 .items label
 {
-  border-top: 2px solid #ddd;
+  width: 180px;
+  /*border-top: 2px solid #ddd;*/
   display: none;
   padding-left: 0px;
   background: white;
@@ -157,7 +159,7 @@ input
 
 #element:checked ~ .items, #type:checked ~ .items
 {
-  padding-top: 30px;
+  padding-top: 39px;
 }
 
 #element:checked ~ .items label, #type:checked ~ .items label
@@ -183,20 +185,14 @@ input
   background: transparent;
 }
 
-a {
+/*a {
   display: block;
   width: 160px;
   text-align: center;
   padding: 5px 0;
   color: black;
   text-decoration: none;
-  border: 2px solid #ddd;
-}
-
-a:hover {
-  cursor: pointer;
-  border-color: red;
-}
+}*/
 
 input[type="checkbox"] {
   -webkit-appearance: none !important;
