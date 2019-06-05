@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+        <!--<meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/nuclear.css">
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/shared-style.css">
+	<title>Ядерная физика. Энергетические уровни.</title>
+
+    </head>
+    <body>
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+			<div class="order-1 order-sm-0">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Назад</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mx-auto order-2">
+				<span class="navbar-brand mx-auto" style="font-size: 17px;">Энергетические уровни</span>
+			</div>
+			<div class="order-3">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="nuclear__levels_info.html">Инфо</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div id="container">
+			<div id="canvas-container">
+				<br/>
+
+				<h1>Энергетические уровни</h1>
+
+				<br/><br/>
+
+				<form>
+					<b>Выберите серии для показа:</b>
+					<br/>
+					<p class="flex-series">
+						<label>
+							<input type="checkbox" id="option1" value="1" onchange="manageSeries()">
+						</label>&nbsp;Серия Лаймана&nbsp;&nbsp;
+					</p>
+					<p class="flex-series">
+						<label>
+							<input type="checkbox" id="option2" value="2" onchange="manageSeries()">
+						</label>&nbsp;Серия Бальмера&nbsp;&nbsp;
+					</p>
+					<p class="flex-series">
+						<label>
+							<input type="checkbox" id="option3" value="3" onchange="manageSeries()">
+						</label>&nbsp;Серия Пашена
+					</p>
+					<p class="flex-series">
+						<label>
+							<input type="checkbox" id="option4" value="4" onchange="manageSeries()">
+						</label>&nbsp;Серия Брекета&nbsp;&nbsp;
+					</p>
+					<p class="flex-series">
+						<label>
+							<input type="checkbox" id="option5" value="5" onchange="manageSeries()">
+						</label>&nbsp;Серия Пфунда
+					</p>
+				</form>
+
+				<canvas id="canvas" width="400" height="400"></canvas>
+			</div>
+		</div>
+
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" src="js/touchToCursor.js"></script>
+
+		<script type="text/javascript">
+
+			const lineAlign = 3;
+			const detectPadding = 10;
+			let canvWidth = 400;
+			let canvHeight = 400;
+			let level1;
+			let level2;
+			let level3;
+			let level4;
+			let level5;
+			let level6;
+			let level7;
+			let levels = [];
+			let currElectPos = 0.9*canvHeight;
+			let currN = 1;
+			let generalMarg;
+
+			function onLoad() {
+				setupCanvas();
+				updateCanvasSize();
+				redraw();
+				drawElectron(document.getElementById('canvas').getContext('2d'), 75, 0.9*canvHeight, 0.9*canvHeight);
+			}
+
+			function setupCanvas() {
+				const canvas = document.getElementById('canvas');
+				canvas.onmousedown = canvMouseDown;
+				canvas.onmouseup = canvMouseUp;
+				canvas.onmousemove = canvMouseMove;
+				TouchToCursor(canvas);
+			}
+
+			function updateCanvasSize() {
+				const canvas = document.getElementById('canvas');
+				let size = Math.min(window.innerWidth, window.innerHeight - 60);
+
+				canvas.style.width = size + 'px';
+				canvas.style.height = size + 'px';
+			}
+
+			function canvMouseDown(e) {
+				const ctx = document.getElementById('canvas').getContext('2d');
+
+				let canvas = e.target;
+				let rect = canvas.getBoundingClientRect();
+				let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+				let diff = detectPadding-lineAlign;
+
+				if (clickY < level1 + diff && clickY > level1 - diff) {
+					drawElectron(ctx, 75, currElectPos, level1, () => {
+						if (1 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 1;
+					});
+					currElectPos = level1;
+				} else if (clickY < level2 + diff && clickY > level2 - diff) {
+					drawElectron(ctx, 75, currElectPos, level2, () => {
+						if (2 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 2;
+					});
+					currElectPos = level2;
+				} else if (clickY < level3 + diff && clickY > level3 - diff) {
+					drawElectron(ctx, 75, currElectPos, level3, () => {
+						if (3 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 3;
+					});
+					currElectPos = level3;
+				} else if (clickY < level4 + diff && clickY > level4 - diff) {
+					drawElectron(ctx, 75, currElectPos, level4, () => {
+						if (4 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 4;
+					});
+					currElectPos = level4;
+				} else if (clickY < level5 + diff && clickY > level5 - 5) {
+					drawElectron(ctx, 75, currElectPos, level5, () => {
+						if (5 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 5;
+					});
+					currElectPos = level5;
+				} else if (clickY < level6 + 5 && clickY > level6 - 2.5) {
+					drawElectron(ctx, 75, currElectPos, level6, () => {
+						if (6 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 6;
+					});
+					currElectPos = level6;
+				} else if (clickY < level7 + 2.5 && clickY > level7 - 2.5) {
+					drawElectron(ctx, 75, currElectPos, level7, () => {
+						if (7 > currN) {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						} else {
+							ctx.font = "10px Arial";
+							ctx.fillStyle = "#000000";
+							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 10, canvHeight*0.95);
+						}
+						currN = 7;
+					});
+					currElectPos = level7;
+				}
+			}
+
+			function canvMouseUp(e) {
+				is_cur_down = false;
+			}
+
+			function canvMouseMove(e) {
+				let canvas = e.target;
+				let rect = canvas.getBoundingClientRect();
+				let clickX = (e.clientX - rect.left) / (canvas.clientWidth / canvas.width);
+				let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+			}
+
+			window.onload = function() {
+				onLoad();
+			};
+
+			document.addEventListener("deviceready", onLoad, false);
+
+			window.onresize = function(e) {
+				updateCanvasSize();
+			};
+
+			// --------------------- do not touch what is higher ----------------------------
+
+			function redraw() {
+				const canvas = document.getElementById('canvas');
+				const ctx = canvas.getContext('2d');
+
+				drawSubstances(ctx);
+			}
+
+			function drawSubstances(ctx) {
+
+				let currentLevel;
+				let currentN;
+
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fillRect(0, 0, canvWidth, canvHeight);
+
+				//------------------------------------------------------------------------------
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=∞", 10, 20);
+
+				let grd = ctx.createLinearGradient(0, canvHeight/100*4, 0, 0);
+				grd.addColorStop(0, "#b8b8b8");
+				grd.addColorStop(1, "white");
+				ctx.fillStyle = grd;
+				ctx.fillRect(40, 0, canvWidth-80, canvHeight*3/40);
+
+				//------------------------------------------------------------------------------
+				currentLevel = 0.1*canvHeight;
+				level7=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=7", 10, currentLevel + lineAlign);
+				ctx.fillText("Область ионизации", canvWidth/5*2, canvHeight*0.05);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN=1/53.69;
+				currentLevel+=currentN*0.8*canvHeight;
+				level6=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=6", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=36/25;
+				currentLevel+=currentN*0.8*canvHeight;
+				level5=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=5", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=25/16;
+				currentLevel+=currentN*0.8*canvHeight;
+				level4=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=4", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=16/9;
+				currentLevel+=currentN*0.8*canvHeight;
+				level3=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=3", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				currentN*=9/4;
+				currentLevel+=currentN*0.8*canvHeight;
+				level2=currentLevel;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=2", 10, currentLevel + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, currentLevel);
+				ctx.lineTo(canvWidth - 40, currentLevel);
+				ctx.stroke();
+				ctx.closePath();
+
+				//------------------------------------------------------------------------------
+				level1=0.9*canvHeight;
+				ctx.font = "10px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("n=1", 10, 0.9*canvHeight + lineAlign);
+
+				ctx.beginPath();
+				ctx.strokeStyle = "#222222";
+				ctx.moveTo(40, 0.9*canvHeight);
+				ctx.lineTo(canvWidth - 40, 0.9*canvHeight);
+				ctx.stroke();
+				ctx.closePath();
+
+				levels = [level1, level2, level3, level4, level5, level6, level7];
+			}
+
+			function drawElectron(ctx, xCord, yCord, yDest, _callback) {
+				redraw();
+				if (Math.round(yCord) != Math.round(yDest)) {
+					let gradient = ctx.createRadialGradient(xCord, yCord, 1, xCord, yCord, 6);
+					gradient.addColorStop(0, "#1a4ab8");
+					gradient.addColorStop(1, "#f4ffed");
+					ctx.arc(xCord, yCord, 4, 0, 2 * Math.PI);
+					ctx.fillStyle = gradient;
+					ctx.fill();
+					setTimeout(drawElectron, 3, ctx, xCord, Math.round(yCord + (yDest-yCord)/Math.abs(yDest-yCord)), Math.round(yDest), _callback);
+				} else {
+					let gradient = ctx.createRadialGradient(xCord, yCord, 1, xCord, yCord, 6);
+					gradient.addColorStop(0, "#1a4ab8");
+					gradient.addColorStop(1, "#f4ffed");
+					ctx.arc(xCord, yCord, 4, 0, 2 * Math.PI);
+					ctx.fillStyle = gradient;
+					ctx.fill();
+					_callback();
+				}
+			}
+
+			function manageSeries() {
+				redraw();
+				generalMarg = 120;
+				if (document.getElementById("option1").checked)
+					drawSeries(1, "#ff1e02");
+				if (document.getElementById("option2").checked)
+					drawSeries(2, "#032fff");
+				if (document.getElementById("option3").checked)
+					drawSeries(3, "#38ff00");
+				if (document.getElementById("option4").checked)
+					drawSeries(4, "#ff00f1");
+				if (document.getElementById("option5").checked)
+					drawSeries(5, "#00beff");
+			}
+
+			function drawSeries(n, color) {
+				const canvas = document.getElementById('canvas');
+				const ctx = canvas.getContext('2d');
+
+				let i = 6;
+				while (i >= n) {
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[i]);
+					ctx.lineTo(generalMarg, levels[n-1]);
+					ctx.stroke();
+					ctx.closePath();
+
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[n-1]);
+					ctx.lineTo(generalMarg-2, levels[n-1]-8);
+					ctx.stroke();
+					ctx.closePath();
+
+					ctx.beginPath();
+					ctx.strokeStyle = color;
+					ctx.moveTo(generalMarg, levels[n-1]);
+					ctx.lineTo(generalMarg+2, levels[n-1]-8);
+					ctx.stroke();
+					ctx.closePath();
+
+					generalMarg += 5;
+
+					i--;
+				}
+
+				generalMarg += 25;
+			}
+
+		</script>
+    </body>
+    </html>
