@@ -8,7 +8,7 @@ window.onload = onLoad;
 
 function onLoad() {
     canvas = document.getElementById('canvas');
-    if (canvas.getContext) 
+    if (canvas.getContext)
         ctx = canvas.getContext('2d');
 
     updateCanvasSize();
@@ -91,6 +91,13 @@ function drawVerticalDoubleArrow(fromx, fromy, tox, toy){
     drawArrow(fromx, fromy, tox, toy);
     drawArrow(fromx, fromy - 1, fromx, fromy);
 }
+function drawTriangle(x1,y1,x2,y2,x3,y3){
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.lineTo(x3,y3);
+    ctx.fill();
+}
 
 function drawFilter(){
     drawLine(OFFSET, MOFFSET, OFFSET, s1 - 4);
@@ -103,13 +110,18 @@ function drawScreen(){
 }
 
 function drawSpecial(){
+    let xtop = HEIGHT/2 - scr_x, xbot = HEIGHT/2 + scr_x;
     for (let i = 25; i < 300; i+=50){
         drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
     }
+   
+
+    ctx.fillStyle = " #ADFF2F";
+    drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, xtop, WIDTH-OFFSET, xbot);
+
+    ctx.fillStyle = "black";
     drawHorizontalDoubleArrow(OFFSET, HEIGHT - MOFFSET, WIDTH-OFFSET, HEIGHT - MOFFSET);
     drawDashedLine(MOFFSET, HEIGHT/2, WIDTH - MOFFSET, HEIGHT/2, [10,10]);
-
-    let xtop = HEIGHT/2 - scr_x, xbot = HEIGHT/2 + scr_x;
     drawDashedLine(OFFSET, s1, WIDTH - OFFSET, xtop, [5,5]);
     drawDashedLine(OFFSET, s2, WIDTH - OFFSET, xtop, [5,5]);
 
@@ -118,12 +130,12 @@ function drawSpecial(){
 
     drawVerticalDoubleArrow(OFFSET + 2* MOFFSET, s2 - MOFFSET, OFFSET + 2*MOFFSET, s1 + MOFFSET);
     drawVerticalDoubleArrow(WIDTH - OFFSET + 2*MOFFSET, HEIGHT/2  , WIDTH - OFFSET + 2*MOFFSET, xtop);
-    
+
     ctx.font = "16px Times New Roman";
     ctx.fillStyle = "red";
-    ctx.fillText('h', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET); 
-    ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2); 
-    ctx.fillText('l', WIDTH/2, HEIGHT-2*MOFFSET); 
+    ctx.fillText('h', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET);
+    ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2);
+    ctx.fillText('l', WIDTH/2, HEIGHT-2*MOFFSET);
     ctx.fillText('S1', 2*MOFFSET, s1    );
     ctx.fillText('S2', 2*MOFFSET, s2);
 
@@ -154,20 +166,29 @@ function calculateValues(){
     s1 = (HEIGHT / 2) - (ds / 2) * k;
     s2 = (HEIGHT / 2) + (ds / 2) * k;
     scr_x = x * k;
-    
+
 
     redrawCanvas();
-    
-    ctx.fillStyle = "blue";
+
+    if (lambda < 390) ctx.fillStyle="Gray";
+    if (lambda >=390 && lambda < 440) ctx.fillStyle="purple";
+    if (lambda >=440 && lambda < 480) ctx.fillStyle="blue";
+    if (lambda >=480 && lambda < 510) ctx.fillStyle="#00BFFF";
+    if (lambda >=510 && lambda < 550) ctx.fillStyle="green"
+    if (lambda >=550 && lambda < 575) ctx.fillStyle="YellowGreen"
+    if (lambda >=575 && lambda < 585) ctx.fillStyle="yellow"
+    if (lambda >=585 && lambda < 620) ctx.fillStyle="orange"
+    if (lambda >=620 && lambda < 770) ctx.fillStyle="red"
+    if (lambda >= 770) ctx.fillStyle="Gray";
     ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
-    
-    let dx = lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
+
+    let dx = n * lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
     ctx.fillStyle = "white";
     ctx.fillRect(start, HEIGHT/2 - dx/2, w, dx);
     for(let i = dx/2, white = true; i < scr_x; i+=dx){
         if (white == true)
             ctx.fillStyle = "black";
-        else   
+        else
             ctx.fillStyle = "white";
 
         white = !white;
