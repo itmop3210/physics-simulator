@@ -180,7 +180,7 @@
                 if (Math.PI - angle > fullReflAngle)
                     return NaN;
 
-                let result = Math.atan(Math.sin(angle) * n_1 / n_2);
+                let result = Math.asin(Math.sin(angle) * n_1 / n_2);
                 if (angle < Math.PI / 2)
                     result -= Math.PI;
                 else
