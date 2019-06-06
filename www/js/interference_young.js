@@ -114,10 +114,19 @@ function drawSpecial(){
     for (let i = 25; i < 300; i+=50){
         drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
     }
-   
 
-    ctx.fillStyle = " #ADFF2F";
-    drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, xtop, WIDTH-OFFSET, xbot);
+    if (lambda < 390) ctx.fillStyle="Gray";
+    if (lambda >=390 && lambda < 440) ctx.fillStyle="purple";
+    if (lambda >=440 && lambda < 480) ctx.fillStyle="blue";
+    if (lambda >=480 && lambda < 510) ctx.fillStyle="#00BFFF";
+    if (lambda >=510 && lambda < 550) ctx.fillStyle="green"
+    if (lambda >=550 && lambda < 575) ctx.fillStyle="YellowGreen"
+    if (lambda >=575 && lambda < 585) ctx.fillStyle="yellow"
+    if (lambda >=585 && lambda < 620) ctx.fillStyle="orange"
+    if (lambda >=620 && lambda < 770) ctx.fillStyle="red"
+    if (lambda >= 770) ctx.fillStyle="Gray";
+    drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, HEIGHT/2 - scr_x, WIDTH-OFFSET, HEIGHT/2 + scr_x);
+    ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
 
     ctx.fillStyle = "black";
     drawHorizontalDoubleArrow(OFFSET, HEIGHT - MOFFSET, WIDTH-OFFSET, HEIGHT - MOFFSET);
@@ -127,6 +136,8 @@ function drawSpecial(){
 
     drawDashedLine(OFFSET, s2, WIDTH - OFFSET, xbot, [5,5]);
     drawDashedLine(OFFSET, s1, WIDTH - OFFSET, xbot, [5,5]);
+
+
 
     drawVerticalDoubleArrow(OFFSET + 2* MOFFSET, s2 - MOFFSET, OFFSET + 2*MOFFSET, s1 + MOFFSET);
     drawVerticalDoubleArrow(WIDTH - OFFSET + 2*MOFFSET, HEIGHT/2  , WIDTH - OFFSET + 2*MOFFSET, xtop);
@@ -157,6 +168,11 @@ function updateValues(){
     calculateValues();
 }
 
+function drawDeltaX(deltax){
+    ctx.fillStyle = "black";
+    ctx.fillText(('Δx = ' + deltax + ' нм'), 6*OFFSET, HEIGHT + OFFSET);
+}
+
 function calculateValues(){
     if (x > (ds/2))
         k = (HEIGHT/2 - OFFSET) / x;
@@ -170,17 +186,6 @@ function calculateValues(){
 
     redrawCanvas();
 
-    if (lambda < 390) ctx.fillStyle="Gray";
-    if (lambda >=390 && lambda < 440) ctx.fillStyle="purple";
-    if (lambda >=440 && lambda < 480) ctx.fillStyle="blue";
-    if (lambda >=480 && lambda < 510) ctx.fillStyle="#00BFFF";
-    if (lambda >=510 && lambda < 550) ctx.fillStyle="green"
-    if (lambda >=550 && lambda < 575) ctx.fillStyle="YellowGreen"
-    if (lambda >=575 && lambda < 585) ctx.fillStyle="yellow"
-    if (lambda >=585 && lambda < 620) ctx.fillStyle="orange"
-    if (lambda >=620 && lambda < 770) ctx.fillStyle="red"
-    if (lambda >= 770) ctx.fillStyle="Gray";
-    ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
 
     let dx = n * lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
     ctx.fillStyle = "white";
@@ -198,5 +203,6 @@ function calculateValues(){
 
     }
 
+    drawDeltaX(dx);
 
 }
