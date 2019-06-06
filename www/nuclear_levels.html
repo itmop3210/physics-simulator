@@ -95,6 +95,7 @@
 			let currElectPos = 0.9*canvHeight;
 			let currN = 1;
 			let generalMarg;
+			let isElectronMoving = false;
 
 			function onLoad() {
 				setupCanvas();
@@ -120,111 +121,113 @@
 			}
 
 			function canvMouseDown(e) {
-				const ctx = document.getElementById('canvas').getContext('2d');
+				if (!isElectronMoving) {
+					const ctx = document.getElementById('canvas').getContext('2d');
 
-				let canvas = e.target;
-				let rect = canvas.getBoundingClientRect();
-				let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
-				let diff = detectPadding-lineAlign;
+					let canvas = e.target;
+					let rect = canvas.getBoundingClientRect();
+					let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
+					let diff = detectPadding-lineAlign;
 
-				if (clickY < level1 + diff && clickY > level1 - diff) {
-					drawElectron(ctx, 75, currElectPos, level1, () => {
-						if (1 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 1;
-					});
-					currElectPos = level1;
-				} else if (clickY < level2 + diff && clickY > level2 - diff) {
-					drawElectron(ctx, 75, currElectPos, level2, () => {
-						if (2 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 2;
-					});
-					currElectPos = level2;
-				} else if (clickY < level3 + diff && clickY > level3 - diff) {
-					drawElectron(ctx, 75, currElectPos, level3, () => {
-						if (3 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 3;
-					});
-					currElectPos = level3;
-				} else if (clickY < level4 + diff && clickY > level4 - diff) {
-					drawElectron(ctx, 75, currElectPos, level4, () => {
-						if (4 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 4;
-					});
-					currElectPos = level4;
-				} else if (clickY < level5 + diff && clickY > level5 - 5) {
-					drawElectron(ctx, 75, currElectPos, level5, () => {
-						if (5 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 5;
-					});
-					currElectPos = level5;
-				} else if (clickY < level6 + 5 && clickY > level6 - 2.5) {
-					drawElectron(ctx, 75, currElectPos, level6, () => {
-						if (6 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 6;
-					});
-					currElectPos = level6;
-				} else if (clickY < level7 + 2.5 && clickY > level7 - 2.5) {
-					drawElectron(ctx, 75, currElectPos, level7, () => {
-						if (7 > currN) {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						} else {
-							ctx.font = "10px Arial";
-							ctx.fillStyle = "#000000";
-							ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
-						}
-						currN = 7;
-					});
-					currElectPos = level7;
+					if (clickY < level1 + diff && clickY > level1 - diff) {
+						drawElectron(ctx, 75, currElectPos, level1, () => {
+							if (1 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(1, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 1;
+						});
+						currElectPos = level1;
+					} else if (clickY < level2 + diff && clickY > level2 - diff) {
+						drawElectron(ctx, 75, currElectPos, level2, () => {
+							if (2 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(2, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 2;
+						});
+						currElectPos = level2;
+					} else if (clickY < level3 + diff && clickY > level3 - diff) {
+						drawElectron(ctx, 75, currElectPos, level3, () => {
+							if (3 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(3, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 3;
+						});
+						currElectPos = level3;
+					} else if (clickY < level4 + diff && clickY > level4 - diff) {
+						drawElectron(ctx, 75, currElectPos, level4, () => {
+							if (4 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(4, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 4;
+						});
+						currElectPos = level4;
+					} else if (clickY < level5 + diff && clickY > level5 - 5) {
+						drawElectron(ctx, 75, currElectPos, level5, () => {
+							if (5 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(5, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 5;
+						});
+						currElectPos = level5;
+					} else if (clickY < level6 + 5 && clickY > level6 - 2.5) {
+						drawElectron(ctx, 75, currElectPos, level6, () => {
+							if (6 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(6, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 6;
+						});
+						currElectPos = level6;
+					} else if (clickY < level7 + 2.5 && clickY > level7 - 2.5) {
+						drawElectron(ctx, 75, currElectPos, level7, () => {
+							if (7 > currN) {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Поглощено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							} else {
+								ctx.font = "10px Arial";
+								ctx.fillStyle = "#000000";
+								ctx.fillText("Выделено "+ Math.abs(13.6/Math.pow(currN, 2)-13.6/Math.pow(7, 2)).toFixed(2) + " эВ энергии.", 12, canvHeight*0.96);
+							}
+							currN = 7;
+						});
+						currElectPos = level7;
+					}
 				}
 			}
 
@@ -384,6 +387,7 @@
 			}
 
 			function drawElectron(ctx, xCord, yCord, yDest, _callback) {
+				isElectronMoving = true;
 				redraw();
 				xCord = 75;
 
@@ -407,7 +411,6 @@
 					ctx.fillStyle = gradient;
 					ctx.fill();
 					setTimeout(drawElectron, 3, ctx, xCord, Math.round(yCord + (yDest-yCord)/Math.abs(yDest-yCord)), Math.round(yDest), _callback);
-                    //manageSeriesWithoutRedraw();
 				} else {
 					let gradient = ctx.createRadialGradient(xCord, yCord, 1, xCord, yCord, 6);
 					gradient.addColorStop(0, "#1a4ab8");
@@ -415,8 +418,8 @@
 					ctx.arc(xCord, yCord, 4, 0, 2 * Math.PI);
 					ctx.fillStyle = gradient;
 					ctx.fill();
+					isElectronMoving = false;
 					_callback();
-                    //manageSeriesWithoutRedraw();
 				}
 			}
 
