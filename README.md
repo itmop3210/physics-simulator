@@ -1,12 +1,12 @@
-# PhysicsSimulator2
+# physics-simulator
 Physics project. This one uses Apache Cordova
 
 ## Getting started
 1. Clone project
 
-```git clone https://github.com/itmop3210/PhysicsSimulator2.git```
+```git clone https://github.com/itmop3210/physics-simulator.git```
 
-```cd PhysicsSimulator2```
+```cd physics-simulator```
 
 2. Install Cordova
 
