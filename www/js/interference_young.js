@@ -116,16 +116,16 @@ function drawSpecial(){
         drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
     }
 
-    if (lambda < 390) primaryColor="Gray";
-    if (lambda >=390 && lambda < 440) primaryColor="purple";
+    if (lambda < 380) primaryColor="Gray";
+    if (lambda >=380 && lambda < 440) primaryColor="purple";
     if (lambda >=440 && lambda < 480) primaryColor="blue";
     if (lambda >=480 && lambda < 510) primaryColor="#00BFFF";
     if (lambda >=510 && lambda < 550) primaryColor="green"
     if (lambda >=550 && lambda < 575) primaryColor="YellowGreen"
     if (lambda >=575 && lambda < 585) primaryColor="yellow"
     if (lambda >=585 && lambda < 620) primaryColor="orange"
-    if (lambda >=620 && lambda < 770) primaryColor="red"
-    if (lambda >= 770) primaryColor="Gray";
+    if (lambda >=620 && lambda < 790) primaryColor="red"
+    if (lambda >= 790) primaryColor="Gray";
 
     ctx.fillStyle = primaryColor;
     drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, HEIGHT/2 - scr_x, WIDTH-OFFSET, HEIGHT/2 + scr_x);
@@ -159,12 +159,20 @@ function drawSpecial(){
 }
 
 function updateValues(){
-    lambda = parseFloat(document.getElementById("lambda").value);
-    ds = parseFloat(document.getElementById("hole_height").value);
+    lambda = parseFloat(document.forms["Inputs"]["lambda"].value);
+    ds = parseFloat(document.forms["Inputs"]["hole_height"].value);
     n = 1;
-    x = parseFloat(document.getElementById("screen_height").value);
-    l = parseFloat(document.getElementById("screen_width").value) * 1000;
-    calculateValues();
+    x = parseFloat(document.forms["Inputs"]["screen_height"].value);
+    l = parseFloat(document.forms["Inputs"]["screen_width"].value) * 1000;
+    
+    //Validation
+    if ((lambda >= 380.0 && lambda <=790.0) && (ds >= 1.0 && ds <= 10.0) && (x >= 1.0 && x <= 10.0) && (l >= 1000 && l <= 10000))
+    {
+        calculateValues();
+    }
+    else
+        alert("Некорректные значения");
+        // console.log("Wrong values" + lambda + " " +ds +" " + x +" " + l);
 }
 
 function drawDeltaX(deltax){
