@@ -177,7 +177,7 @@ function updateValues(){
 
 function drawDeltaX(deltax){
     ctx.fillStyle = "black";
-    ctx.fillText(('Δx = ' + deltax + ' нм'), 2.7*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(('Δx ≈ ' + deltax + ' нм'), 2.7*OFFSET, HEIGHT + OFFSET);
 }
 
 function calculateValues(){
@@ -215,6 +215,6 @@ function calculateValues(){
     ctx.fillRect(start, HEIGHT/2-scr_x, w, -200);
     ctx.fillRect(start, HEIGHT/2-scr_x + 2*scr_x, w, 200);
     
-    drawDeltaX(dx);
+    drawDeltaX(Math.round(dx * 100) / 100);
 
 }
