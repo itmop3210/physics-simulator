@@ -148,7 +148,7 @@ function drawSpecial(){
     ctx.fillStyle = "red";
     ctx.fillText('d', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET);
     ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2);
-    ctx.fillText('l', WIDTH/2, HEIGHT-2*MOFFSET);
+    ctx.fillText('L', WIDTH/2, HEIGHT-2*MOFFSET);
     ctx.fillText('S1', 2*MOFFSET, s1    );
     ctx.fillText('S2', 2*MOFFSET, s2);
 
@@ -156,24 +156,20 @@ function drawSpecial(){
     ctx.fillText('n = ', OFFSET, HEIGHT + OFFSET);
     ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
 
-    ctx.fillText('λ = ', 3*OFFSET, HEIGHT + OFFSET);
-    ctx.fillText(lambda, 4*OFFSET - MOFFSET, HEIGHT + OFFSET);
-    ctx.fillText('нм', 5*OFFSET - MOFFSET, HEIGHT + OFFSET);
-
 }
 
 function updateValues(){
     lambda = parseFloat(document.getElementById("lambda").value);
     ds = parseFloat(document.getElementById("hole_height").value);
-    n = parseFloat(document.getElementById("n").value);
+    n = 1;
     x = parseFloat(document.getElementById("screen_height").value);
-    l = parseFloat(document.getElementById("screen_width").value);
+    l = parseFloat(document.getElementById("screen_width").value) * 1000;
     calculateValues();
 }
 
 function drawDeltaX(deltax){
     ctx.fillStyle = "black";
-    ctx.fillText(('Δx = ' + deltax + ' нм'), 6*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(('Δx = ' + deltax + ' нм'), 2.5*OFFSET, HEIGHT + OFFSET);
 }
 
 function calculateValues(){

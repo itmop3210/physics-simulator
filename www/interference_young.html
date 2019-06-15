@@ -34,33 +34,50 @@
 
 	<div style="text-align: left; margin-left: 2px">
 		<b>Задача №1</b><br/>
-		<b>Дано:</b>
-		<form>
-			<table style="width: 100%;">
-				<tr><td>
-					n= <input type="text" id="n" value="1" placeholder="Преломление среды" style="width:65%; font-size:11px">
-				</td></tr>
-				<tr><td>
-					λ= <input type="text" id="lambda" value="500" placeholder="Длина волны, нм" style="width:65%; font-size:11px"> нм
-				</td></tr>
-				<tr><td>
-					d= <input type="text" id="hole_height" value="2" placeholder="Расстояние между источниками, мм" style="width:65%; font-size:11px"> мм
-				</td></tr>
-				<tr><td>
-					x= <input type="text" id="screen_height" value="3" placeholder="Ширина интерференционной картины, мм" style="width:65%; font-size:11px"> мм
-				</td></tr>
-				<tr><td>
-					l = <input type="text" id="screen_width" value="1000" placeholder="Расстояние между экраном и источниками, мм" style="width:65%; margin-left: 3 px; font-size:11px"> мм
-				</td></tr>
-				
-			</table>
-		</form>
+		<table>
+			<tr>
+				<td style="width:40%; vertical-align:top;">
+					<b>Дано:</b>
+					<form>
+						<table style="width: 100%;">
+							<tr><td>
+								λ= <input type="text" id="lambda" value="500" placeholder="Длина волны, нм" style="width:64%; font-size:11px"> нм
+							</td></tr>
+							<tr><td>
+								d= <input type="text" id="hole_height" value="2" placeholder="Расстояние между источниками, мм" style="width:64%; font-size:11px"> мм
+							</td></tr>
+							<tr><td>
+								x= <input type="text" id="screen_height" value="3" placeholder="Ширина интерференционной картины, мм" style="width:64%; font-size:11px"> мм
+							</td></tr>
+							<tr><td>
+								L= <input type="text" id="screen_width" value="1" placeholder="Расстояние между экраном и источниками, м" style="width:64%; margin-left: 3 px; font-size:11px"> м
+							</td></tr>
+							
+						</table>
+					</form>
+				</td>
+				<td style="vertical-align:top; border-left: 1px solid #000; padding-left: 5px">
+					<b>Решение:</b>
+					<div style="font-size: 80%">
+						Ширина интерференционной полосы<br> 
+						Δx = ? мкм<br> 
+						Из условия L >> d следует:<br> 
+						x<sub>max</sub> = ±mLλ/d, (m=0,1,2,..)<br>
+						x<sub>min</sub> = ±(m+0,5)Lλ/d<br>
+						Тогда ширина интерференционной полосы: <br>
+						Δx=Lλ/d
+					</div>
+					<input style="font-size: 70%; align-self:center;" type="button" value="Расчитать" id="submit" onclick="updateValues()" style="width:50%; margin-left:25%;">
+
+				</td>
+			</tr>
+		</table>
+		<br/>
 	</div>
 
 	<div id="canvas-container">
 		<canvas id="canvas" width="410" height="350"></canvas>
 	</div>
-	<input type="button" value="Построить" id="submit" onclick="updateValues()" style="width:50%; margin-left:25%;">
 	
 </body>
 </html>
