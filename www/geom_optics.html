@@ -31,17 +31,21 @@
 
         <br>
 
+        <div style="text-align: center;">
+            Законы отражения и преломления<br><br>
+
+            n1 = <input id="n1_in" type="number" value="1" step="0.0001" onchange="onChangeN()"><br><br>
+            n2 = <input id="n2_in" type="number" value="1.5" step="0.0001" onchange="onChangeN()"><br><br>
+            <span id="warntext" style="color: red;"></span>
+        </div>
+
         <div id="canvas-container">
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
 
         <br>
 
-        <div style="text-align: center;">
-            n1 = <input id="n1_in" type="number" value="1" step="0.0001" onchange="onChangeN()"><br><br>
-            n2 = <input id="n2_in" type="number" value="1.5" step="0.0001" onchange="onChangeN()"><br><br>
-            <span id="warntext" style="color: red;"></span>
-        </div>
+        
 
         <div style="height: 100px"></div>
 
@@ -93,6 +97,15 @@
                 drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
                 drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
                 drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+
+                if (cur_angle < Math.PI / 2) {
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, -cur_angle, '#000000');
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
+                }
+                else {
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, -cur_angle, refrAngle, '#000000');
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, cur_angle, Math.PI, '#000000');
+                }
             }
 
             function drawSubstances(ctx) {
@@ -171,6 +184,50 @@
                 }
             }
 
+            function drawAngleValue(ctx, centerPoint, distance, startAngle, endAngle, style = "#00AA00") {
+                
+                if(startAngle > Math.PI)
+                    startAngle = -2*Math.PI + startAngle;
+                
+                if(endAngle > Math.PI)
+                    endAngle = -2*Math.PI + endAngle;
+
+                const epsilon = 0.01;
+
+                let angle = Math.abs(endAngle - startAngle);
+
+                let prevLineWidth = ctx.lineWidth;
+
+                ctx.beginPath();
+                ctx.strokeStyle = style;
+                ctx.lineWidth = 0.5;
+
+                const angleInDegrees = Math.round(angle/Math.PI*180);
+
+                if(Math.abs(angle - Math.PI/2) < epsilon && angleInDegrees == 90) {
+                    const p1 = calcSecondPoint(centerPoint, startAngle, distance);
+                    const p2 = calcSecondPoint(centerPoint, endAngle, distance);
+                    const p3 = calcSecondPoint(p1, startAngle + Math.PI/2, distance);
+                    
+                    ctx.moveTo(p3.x, p3.y);
+                    ctx.lineTo(p1.x, p1.y);
+                    ctx.moveTo(p3.x, p3.y);
+                    ctx.lineTo(p2.x, p2.y);
+
+                } else
+                    ctx.arc(centerPoint.x, centerPoint.y, distance, -startAngle + 3*Math.PI/2, -endAngle + 3*Math.PI/2, true);
+                
+                const textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 9/8*distance + 10);
+
+                ctx.font = "12px Arial";
+                ctx.fillText(angleInDegrees, textPoint.x, textPoint.y);
+
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.lineWidth = prevLineWidth;
+            }
+
             function calcRefrAngle(angle, n_1, n_2) {
                 if (angle > Math.PI / 2)
                     [n_1, n_2] = [n_2, n_1];
@@ -178,9 +235,12 @@
                 let fullReflAngle = Math.asin(n_2 / n_1);
                 //console.log("angle: " + angle + ", full refl: " + fullReflAngle);
                 if (Math.PI - angle > fullReflAngle)
-                    return NaN;
+                    return Math.PI * 3 / 2;
 
-                let result = Math.asin(Math.sin(angle) * n_1 / n_2);
+                let modAngle = (angle <= Math.PI / 2) ? angle : Math.PI - angle;
+
+                let result = Math.asin(Math.sin(modAngle) * n_1 / n_2);
+
                 if (angle < Math.PI / 2)
                     result -= Math.PI;
                 else
