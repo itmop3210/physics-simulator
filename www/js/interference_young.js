@@ -153,8 +153,8 @@ function drawSpecial(){
     ctx.fillText('S2', 2*MOFFSET, s2);
 
     ctx.fillStyle = "black";
-    ctx.fillText('n = ', OFFSET, HEIGHT + OFFSET);
-    ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
+    ctx.fillText('Ответ:', OFFSET, HEIGHT + OFFSET);
+    // ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
 
 }
 
@@ -169,7 +169,7 @@ function updateValues(){
 
 function drawDeltaX(deltax){
     ctx.fillStyle = "black";
-    ctx.fillText(('Δx = ' + deltax + ' нм'), 2.5*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(('Δx = ' + deltax + ' нм'), 2.7*OFFSET, HEIGHT + OFFSET);
 }
 
 function calculateValues(){
