@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <div class="mx-auto order-2">
-                <span class="navbar-brand mx-auto" style="font-size: 17px;">Поляризация</span>
+                <span class="navbar-brand mx-auto" style="font-size: 17px;">Поляризация на границе раздела двух диэлектриков</span>
             </div>
             <div class="order-3">
                 <ul class="navbar-nav ml-auto">
@@ -117,7 +117,7 @@
 
                 ctx.font = "15px Arial";
                 ctx.fillStyle = "#222222";
-                ctx.fillText("n1", 10, 190);
+                ctx.fillText("n1 = "+n1, 10, 190);
 
                 // substance 2
                 ctx.fillStyle = "#E5E5FF";
@@ -125,7 +125,7 @@
 
                 ctx.font = "15px Arial";
                 ctx.fillStyle = "#222222";
-                ctx.fillText("n2", 10, 390);
+                ctx.fillText("n2 = "+n2, 10, 390);
 
                 // line between
                 ctx.beginPath();
@@ -205,15 +205,24 @@
 					}					
 				}else 
 				{
-					for(let i = 1; i < 9; i = i + 2)
+					for(let i = 1; i < 9; i++ )
 					{
 						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
 
-						ctx.beginPath();
-						ctx.strokeStyle = '#7A7A7A';
-						ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
-						ctx.stroke();
-						ctx.closePath();
+						if(i%2 != 0)
+						{
+							ctx.beginPath();
+							ctx.strokeStyle = '#7A7A7A';
+							ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
+							ctx.stroke();
+							ctx.closePath();
+						}else
+						{
+							let p1 = calcSecondPoint(dotPoint, angle + Math.PI/2, dashLength/2);
+					
+							drawAngledLine(ctx, p1, angle - Math.PI/2, dashLength, '#7A7A7A');
+
+						}
 					}		
 				}
 
