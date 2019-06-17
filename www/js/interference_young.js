@@ -3,6 +3,7 @@ let lambda = 500, ds=2, l = 1000, x = 3, n = 1;
 let canvas, ctx;
 let scr_l, scr_x, s1, s2;
 let k;
+let primaryColor, bgColor="#E4E4E4";
 
 window.onload = onLoad;
 
@@ -31,7 +32,7 @@ function updateCanvasSize() {
 }
 
 function redrawCanvas(){
-    ctx.fillStyle = "#E4E4E4";
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, 410, 350);
     drawFilter();
     drawScreen();
@@ -115,18 +116,19 @@ function drawSpecial(){
         drawArrow(MOFFSET, i, OFFSET - MOFFSET, i);
     }
 
-    if (lambda < 390) ctx.fillStyle="Gray";
-    if (lambda >=390 && lambda < 440) ctx.fillStyle="purple";
-    if (lambda >=440 && lambda < 480) ctx.fillStyle="blue";
-    if (lambda >=480 && lambda < 510) ctx.fillStyle="#00BFFF";
-    if (lambda >=510 && lambda < 550) ctx.fillStyle="green"
-    if (lambda >=550 && lambda < 575) ctx.fillStyle="YellowGreen"
-    if (lambda >=575 && lambda < 585) ctx.fillStyle="yellow"
-    if (lambda >=585 && lambda < 620) ctx.fillStyle="orange"
-    if (lambda >=620 && lambda < 770) ctx.fillStyle="red"
-    if (lambda >= 770) ctx.fillStyle="Gray";
+    if (lambda < 380) primaryColor="Gray";
+    if (lambda >=380 && lambda < 440) primaryColor="purple";
+    if (lambda >=440 && lambda < 480) primaryColor="blue";
+    if (lambda >=480 && lambda < 510) primaryColor="#00BFFF";
+    if (lambda >=510 && lambda < 550) primaryColor="green"
+    if (lambda >=550 && lambda < 575) primaryColor="YellowGreen"
+    if (lambda >=575 && lambda < 585) primaryColor="yellow"
+    if (lambda >=585 && lambda < 620) primaryColor="orange"
+    if (lambda >=620 && lambda < 790) primaryColor="red"
+    if (lambda >= 790) primaryColor="Gray";
+
+    ctx.fillStyle = primaryColor;
     drawTriangle((WIDTH - 2 * OFFSET) * ds / (2*(ds/2 + x)) + OFFSET, HEIGHT/2, WIDTH-OFFSET, HEIGHT/2 - scr_x, WIDTH-OFFSET, HEIGHT/2 + scr_x);
-    ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
 
     ctx.fillStyle = "black";
     drawHorizontalDoubleArrow(OFFSET, HEIGHT - MOFFSET, WIDTH-OFFSET, HEIGHT - MOFFSET);
@@ -144,33 +146,38 @@ function drawSpecial(){
 
     ctx.font = "16px Times New Roman";
     ctx.fillStyle = "red";
-    ctx.fillText('h', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET);
+    ctx.fillText('d', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET);
     ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2);
-    ctx.fillText('l', WIDTH/2, HEIGHT-2*MOFFSET);
+    ctx.fillText('L', WIDTH/2, HEIGHT-2*MOFFSET);
     ctx.fillText('S1', 2*MOFFSET, s1    );
     ctx.fillText('S2', 2*MOFFSET, s2);
 
     ctx.fillStyle = "black";
-    ctx.fillText('n = ', OFFSET, HEIGHT + OFFSET);
-    ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
+    ctx.fillText('Ответ:', OFFSET, HEIGHT + OFFSET);
+    // ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
 
-    ctx.fillText('λ = ', 3*OFFSET, HEIGHT + OFFSET);
-    ctx.fillText(lambda, 4*OFFSET - MOFFSET, HEIGHT + OFFSET);
-    ctx.fillText('нм', 5*OFFSET - MOFFSET, HEIGHT + OFFSET);
 }
 
 function updateValues(){
-    lambda = parseFloat(document.getElementById("lambda").value);
-    ds = parseFloat(document.getElementById("hole_height").value);
-    n = parseFloat(document.getElementById("n").value);
-    x = parseFloat(document.getElementById("screen_height").value);
-    l = parseFloat(document.getElementById("screen_width").value);
-    calculateValues();
+    lambda = parseFloat(document.forms["Inputs"]["lambda"].value);
+    ds = parseFloat(document.forms["Inputs"]["hole_height"].value);
+    n = 1;
+    x = parseFloat(document.forms["Inputs"]["screen_height"].value);
+    l = parseFloat(document.forms["Inputs"]["screen_width"].value) * 1000;
+    
+    //Validation
+    if ((lambda >= 380.0 && lambda <=790.0) && (ds >= 1.0 && ds <= 10.0) && (x >= 1.0 && x <= 10.0) && (l >= 1000 && l <= 10000))
+    {
+        calculateValues();
+    }
+    else
+        alert("Некорректные значения");
+        // console.log("Wrong values" + lambda + " " +ds +" " + x +" " + l);
 }
 
 function drawDeltaX(deltax){
     ctx.fillStyle = "black";
-    ctx.fillText(('Δx = ' + deltax + ' нм'), 6*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(('Δx ≈ ' + deltax + ' нм'), 2.7*OFFSET, HEIGHT + OFFSET);
 }
 
 function calculateValues(){
@@ -188,13 +195,13 @@ function calculateValues(){
 
 
     let dx = n * lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
-    ctx.fillStyle = "white";
+    ctx.fillStyle = primaryColor;
     ctx.fillRect(start, HEIGHT/2 - dx/2, w, dx);
     for(let i = dx/2, white = true; i < scr_x; i+=dx){
         if (white == true)
             ctx.fillStyle = "black";
         else
-            ctx.fillStyle = "white";
+            ctx.fillStyle = primaryColor;
 
         white = !white;
 
@@ -203,6 +210,11 @@ function calculateValues(){
 
     }
 
-    drawDeltaX(dx);
+    // ctx.fillRect(WIDTH-5*MOFFSET, HEIGHT/2-scr_x, 14, 2*scr_x);
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(start, HEIGHT/2-scr_x, w, -200);
+    ctx.fillRect(start, HEIGHT/2-scr_x + 2*scr_x, w, 200);
+    
+    drawDeltaX(Math.round(dx * 100) / 100);
 
 }
