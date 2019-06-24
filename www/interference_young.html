@@ -84,15 +84,19 @@
 		λ:<input name="lambda" type="range" onchange="onRangeUpdate()" value="500" min="380" step="10" max="790">нм<br>
 		d:<input name="hole_height" type="range" onchange="onRangeUpdate()" value="2" min="0.5" step="0.5" max="10">мм<br>
 		L:<input name="screen_width" type="range" onchange="onRangeUpdate()" value="1" min="0.5" step="0.5" max="5">м<br>
-	
-		<div >
-			<input style="font-size: 85%; width:31%" id="myBtn"  type="button" value="Условие">
-			<form action="interference_young_theory.html">
-				<input style="font-size: 85%; width:31%"  type="submit" value="Теория">
-			</form>
-			<input style="font-size: 85%; width:31%; " type="button" value="Ответ " id="submit" onclick="updateValues()">
-		</div>		
 	</form>
+
+		<div style="display:inline; ">
+			
+			<input style="font-size: 85%; width:31%" id="myBtn"  type="button" value="Условие">
+			<form action="interference_young_theory.html" style="display:inline;">
+				<input style="font-size: 85%; width:31%" type="submit" value="Теория" />
+		    </form> 					   
+		
+			<input style="font-size: 85%; width:31%; " type="button" value="Ответ " id="submit" onclick="updateValues()">
+			
+		</div>		
+	
 
 		<div id="myModal" class="modal">
 			<!-- Modal content -->
