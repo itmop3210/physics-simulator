@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+        	<link rel="stylesheet" type="text/css" href="css/interference-popup.css">
+
         <link rel="stylesheet" type="text/css" href="css/shared-style.css">
         <title>Дифракция</title>
     </head>
@@ -28,21 +30,26 @@
         </ul>
     </div>
 </nav>
+	
 <br>
 <div id="canvas-container">
     <canvas id="canvas" width="400" height="400"></canvas>
 </div>
 <br>
 <div style="text-align: center;">
-    Radius = <input id="n1_in" type="number" value="2" step="2" max="10" onchange="onChangeR()"><br><br>
+<!--     Radius = <input id="n1_in" type="number" value="2" step="2" max="10" onchange="onChangeR()"><br><br> -->
+  Радиус: <br>
+   <input id="n1_in" type="range" value="2" step="2" max="10" onchange="onChangeR()"><br><br>
 
-    <span id="warntext" style="color: red;"></span>
-</div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="navbar-brand mx-auto" class="nav-link" href="difrac_theory.html"> Теория </a>
+            </li>
+        </ul>
+    </div>
+   
 
-
-
-
-<div style="height: 100px"></div>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 <script type="text/javascript" src="js/touchToCursor.js"></script>
 <script type="text/javascript">
@@ -569,8 +576,8 @@
         if ((n1%2===1)||(n1>10)||(n1<2))
         {
             errMsg +=  "Радиус должен быть четным от 2 до 10<br>";
-
-            document.getElementById('warntext').innerHTML = errMsg;
+            //there is no need in error msg now, becouse we change text input with slider
+            // document.getElementById('warntext').innerHTML = errMsg;
 
 
         }
