@@ -142,42 +142,61 @@ function drawSpecial(){
 
 
     drawVerticalDoubleArrow(OFFSET + 2* MOFFSET, s2 - MOFFSET, OFFSET + 2*MOFFSET, s1 + MOFFSET);
-    drawVerticalDoubleArrow(WIDTH - OFFSET + 2*MOFFSET, HEIGHT/2  , WIDTH - OFFSET + 2*MOFFSET, xtop);
+    // drawVerticalDoubleArrow(WIDTH - OFFSET + 2*MOFFSET, HEIGHT/2  , WIDTH - OFFSET + 2*MOFFSET, xtop);
 
     ctx.font = "16px Times New Roman";
     ctx.fillStyle = "red";
     ctx.fillText('d', OFFSET + 4*MOFFSET, HEIGHT/2 - 2*MOFFSET);
-    ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2);
+    // ctx.fillText('x', WIDTH - OFFSET + 2.4*MOFFSET, HEIGHT/2 - scr_x/2);
     ctx.fillText('L', WIDTH/2, HEIGHT-2*MOFFSET);
     ctx.fillText('S1', 2*MOFFSET, s1    );
     ctx.fillText('S2', 2*MOFFSET, s2);
 
     ctx.fillStyle = "black";
-    ctx.fillText('Ответ:', OFFSET, HEIGHT + OFFSET);
+    // ctx.fillText('λ=' + lambda + 'нм, d=' + ds + 'мм, L=' + l + 'м', 2*MOFFSET, HEIGHT + OFFSET);
+    drawInputs();
+    ctx.fillText('Ответ:', 7.4*OFFSET, HEIGHT + OFFSET);
     // ctx.fillText(n, 2*OFFSET - 2*MOFFSET, HEIGHT + OFFSET);
 
 }
 
-function updateValues(){
+function getValues(){
     lambda = parseFloat(document.forms["Inputs"]["lambda"].value);
     ds = parseFloat(document.forms["Inputs"]["hole_height"].value);
     n = 1;
-    x = parseFloat(document.forms["Inputs"]["screen_height"].value);
+    // x = parseFloat(document.forms["Inputs"]["screen_height"].value);
     l = parseFloat(document.forms["Inputs"]["screen_width"].value) * 1000;
+}
+
+function updateValues(){
+    getValues();
     
     //Validation
-    if ((lambda >= 380.0 && lambda <=790.0) && (ds >= 1.0 && ds <= 10.0) && (x >= 1.0 && x <= 10.0) && (l >= 1000 && l <= 10000))
-    {
+    // if ((lambda >= 380.0 && lambda <=790.0) && (ds >= 1.0 && ds <= 10.0) && (x >= 1.0 && x <= 10.0) && (l >= 1000 && l <= 10000))
+    // {
         calculateValues();
-    }
-    else
-        alert("Некорректные значения");
+    // }
+    // else
+    //     alert("Некорректные значения");
         // console.log("Wrong values" + lambda + " " +ds +" " + x +" " + l);
+}
+
+function onRangeUpdate(){
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(MOFFSET,300, 200, 50);
+    getValues();
+    drawInputs();
 }
 
 function drawDeltaX(deltax){
     ctx.fillStyle = "black";
-    ctx.fillText(('Δx ≈ ' + deltax + ' нм'), 2.7*OFFSET, HEIGHT + OFFSET);
+    ctx.fillText(('Δx ≈ ' + deltax + ' нм'), 9*OFFSET, HEIGHT + OFFSET);
+
+}
+
+function drawInputs(){
+    ctx.fillStyle = "black";
+    ctx.fillText('λ=' + lambda + 'нм, d=' + ds + 'мм, L=' + l/1000 + 'м', 2*MOFFSET, HEIGHT + OFFSET);
 }
 
 function calculateValues(){
@@ -194,7 +213,7 @@ function calculateValues(){
     redrawCanvas();
 
 
-    let dx = n * lambda * l / ds / 1000000 * k, start = WIDTH-5*MOFFSET+2, w = 10;
+    let dx = n * lambda * l / ds / 100000, start = WIDTH-5*MOFFSET+2, w = 10;
     ctx.fillStyle = primaryColor;
     ctx.fillRect(start, HEIGHT/2 - dx/2, w, dx);
     for(let i = dx/2, white = true; i < scr_x; i+=dx){

@@ -33,7 +33,7 @@
 
 	<br>
 
-	<div style="text-align: left; margin-left: 2px">
+	<!-- <div style="text-align: left; margin-left: 2px">
 		<b>Задача №1</b><br/>
 		<table>
 			<tr>
@@ -68,54 +68,68 @@
 						Тогда ширина интерференционной полосы: <br>
 						Δx=Lλ/d
 					</div>
-					<input style="font-size: 85%; width:33%; " type="button" value="Считать " id="submit" onclick="updateValues()">
-					<input style="font-size: 85%; width:33%" id="myBtn"  type="button" value="Условие">
-						<div id="myModal" class="modal">
-							<!-- Modal content -->
-							<div class="modal-content">
-								<div class="modal-header">
-									<h3>Условие задачи</h3>
-									<span class="close">&times;</span>
-								</div>
-								<div class="modal-body">
-									<p>В опыте Юнга когерентные источники S1 и S2 с длиной волны в диапозоне видимого света (380-790 нм), находятся на расстоянии d (1-10 мм) друг от друга. Расстояние до экрана равно L (1-10 м), при этом L >> d. Ширина интерференционной картины равна x (1-10 мм).<br>
-									Изменяя представленные параметры, расчитать ширину одной интерференционной полосы Δx.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<script>
-					// Get the modal
-					var modal = document.getElementById("myModal");
-					// Get the button that opens the modal
-					var btn = document.getElementById("myBtn");
-					// Get the <span> element that closes the modal
-					var span = document.getElementsByClassName("close")[0];
-					// When the user clicks the button, open the modal 
-					btn.onclick = function() {
-						modal.style.display = "block";
-					}
-					// When the user clicks on <span> (x), close the modal
-					span.onclick = function() {
-						modal.style.display = "none";
-					}
-					// When the user clicks anywhere outside of the modal, close it
-					window.onclick = function(event) {
-						if (event.target == modal) {
-							modal.style.display = "none";
-						}
-					}
-					</script>
+					
 					
 				</td>
 			</tr>
 		</table>
 
-	</div>
+	</div> -->
 
 	<div id="canvas-container">
 		<canvas id="canvas" width="410" height="350"></canvas>
 	</div>
+	Дано: <br>
+	<form name="Inputs" style="margin-left: 3px;">
+		λ:<input name="lambda" type="range" onchange="onRangeUpdate()" value="500" min="380" step="10" max="790">нм<br>
+		d:<input name="hole_height" type="range" onchange="onRangeUpdate()" value="2" min="0.5" step="0.5" max="10">мм<br>
+		L:<input name="screen_width" type="range" onchange="onRangeUpdate()" value="1" min="0.5" step="0.5" max="5">м<br>
+	
+		<div >
+			<input style="font-size: 85%; width:31%" id="myBtn"  type="button" value="Условие">
+			<form action="interference_young_theory.html">
+				<input style="font-size: 85%; width:31%"  type="submit" value="Теория">
+			</form>
+			<input style="font-size: 85%; width:31%; " type="button" value="Ответ " id="submit" onclick="updateValues()">
+		</div>		
+	</form>
+
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Условие задачи</h3>
+					<span class="close">&times;</span>
+				</div>
+				<div class="modal-body">
+					<p>В опыте Юнга когерентные источники S1 и S2 с длиной волны в диапозоне видимого света (380-790 нм), находятся на расстоянии d (1-10 мм) друг от друга. Расстояние до экрана равно L (1-10 м), при этом L >> d. Ширина интерференционной картины равна x (1-10 мм).<br>
+					Изменяя представленные параметры, расчитать ширину одной интерференционной полосы Δx.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	// Get the modal
+	var modal = document.getElementById("myModal");
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	// When the user clicks the button, open the modal 
+	btn.onclick = function() {
+		modal.style.display = "block";
+	}
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+	</script>
 	
 </body>
 </html>
