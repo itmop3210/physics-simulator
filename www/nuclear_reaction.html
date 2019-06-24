@@ -37,15 +37,82 @@
             <div id="equation-container">
                 <br/>
 
-                <h1>Альфа- и бета-распады</h1>
+                <h2>Альфа- и бета-распады</h2>
 
                 <br/>
 
-                <span id="answer"></span>
+                <button class="theory_button"><a class="link_in_btn" href="nuclear_reaction_theory.html">Теория</a></button>
+
+                <br/>
+                <br/>
+                <br/>
+
+                <table width="100%">
+                    <tr>
+                        <td width="70%">
+                            <!--<label>
+                                <select id="type_select" onchange="formula()">
+                                    <option value="undefined">Тип превращения</option>
+                                    <option value="alpha">&#945-распад</option>
+                                    <option value="beta">&#946-распад</option>
+                                </select>
+                            </label>-->
+
+                            <label for="type" class="select">
+                                <input type="radio" name="list_type" value="not_changed" id="bg_type" checked />
+                                <input type="radio" name="list_type" value="not_changed" id="type">
+                                <label class="bg" for="bg_type"></label>
+                                <div class="items">
+                                    <input type="radio" name="list_type" value="alpha" id="type[0]" onclick="formula()">
+                                    <label for="type[0]">&#945-распад</label>
+                                    <input type="radio" name="list_type" value="beta" id="type[1]" onclick="formula()">
+                                    <label for="type[1]">&#946-распад</label>
+                                    <span id="text_type">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Тип&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9660;</span>
+                                </div>
+                            </label>
+
+                            <br/>
+
+                            <span id="formula"></span>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span id="answer"></span>
+
+                        </td>
+
+                        <td width="30%">
+                            <div class="flex-container">
+                                <p>Элемент</p>
+
+                                <button class="my_button" value="92, 238, U" onclick="reaction(this)"><sup class="A">238</sup><sub class="Z">92</sub>U</button>
+
+                                <button class="my_button" value="88, 226, Ra" onclick="reaction(this)"><sup class="A">226</sup><sub class="Z">88</sub>Ra</button>
+
+                                <button class="my_button" value="12, 24, Mg" onclick="reaction(this)"><sup class="A">24</sup><sub class="Z">12</sub>Mg</button>
+
+                                <button class="my_button" value="93, 237, Np" onclick="reaction(this)"><sup class="A">237</sup><sub class="Z">93</sub>Np</button>
+
+                                <button class="my_button" value="95, 243, Am" onclick="reaction(this)"><sup class="A">243</sup><sub class="Z">95</sub>Am</button>
+
+                                <button class="my_button" value="98, 251, Cf" onclick="reaction(this)"><sup class="A">251</sup><sub class="Z">98</sub>Cf</button>
+
+                                <button class="my_button" value="99, 252, Es" onclick="reaction(this)"><sup class="A">252</sup><sub class="Z">99</sub>Es</button>
+
+                                <button class="my_button" value="87, 223, Fr" onclick="reaction(this)"><sup class="A">223</sup><sub class="Z">87</sub>Fr</button>
+
+                                <button class="my_button" value="101, 258, Md" onclick="reaction(this)"><sup class="A100">258</sup><sub class="Z">101</sub>Md</button>
+
+                                <button class="my_button" value="102, 261, No" onclick="reaction(this)"><sup class="A100">261</sup><sub class="Z">102</sub>No</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
 
                 <br/><br/>
 
-                <div class="flex-container">
+                <!--<div class="flex-container">
                     <label for="type" class="select">
                         <input type="radio" name="list_type" value="not_changed" id="bg_type" checked />
                         <input type="radio" name="list_type" value="not_changed" id="type">
@@ -97,7 +164,7 @@
                         </div>
                     </label>
 
-                </div>
+                </div>-->
             </div>
         </div>
 
@@ -138,9 +205,9 @@
                 {  z: 100, a: 257, name: 'Fm' },
             ];
 
-            function reaction() {
-                let values = document.querySelector('input[name="list_element"]:checked').value;
-                if (values !== "not_changed") {
+            function reaction(button) {
+                if (document.querySelector('input[name="list_type"]:checked').value !== "not_changed") {
+                    let values = button.value;
                     let output;
                     let array = values.split(', ');
                     let answer;
@@ -183,6 +250,26 @@
                     } else {
                         document.getElementById("answer").innerHTML = "";
                     }
+                } else {
+                    document.getElementById("formula").innerHTML = "Выберите тип распада";
+                    document.getElementById("answer").innerHTML = "";
+                }
+            }
+
+            function formula() {
+                if (document.querySelector('input[name="list_type"]:checked').value === "not_changed") {
+                    document.getElementById("answer").innerHTML = "";
+                    document.getElementById("formula").innerHTML = "";
+                } else if (document.querySelector('input[name="list_type"]:checked').value === "alpha") {
+                    document.getElementById("answer").innerHTML = "";
+                    document.getElementById("formula").innerHTML = "<sup class=\"AM\">M</sup><sub class=\"Z\">z</sub>X&nbsp;&nbsp; &#8594 &nbsp;&nbsp;" +
+                        "&#945 (<sup class=\"AHe\">4</sup><sub class=\"Z\">2</sub class=\"Z\"> He&nbsp;) &nbsp;&nbsp; +" +
+                        "<sup class=\"A\">M-4</sup><sub class=\"Z\">z-2</sub>Y + &#947";
+                } else if (document.querySelector('input[name="list_type"]:checked').value === "beta") {
+                    document.getElementById("answer").innerHTML = "";
+                    document.getElementById("formula").innerHTML = "<sup class=\"AM\">M</sup><sub class=\"Z\">z</sub>X&nbsp;&nbsp; &#8594 &nbsp;&nbsp;" +
+                        "&#946 (<sup class=\"Ae\">0</sup><sub class=\"Z\">-1</sub class=\"Z\"> e&nbsp;) &nbsp;&nbsp; +" +
+                        "<sup class=\"A\">M</sup><sub class=\"Z\">z+1</sub>Y + &#947";
                 }
             }
         </script>
