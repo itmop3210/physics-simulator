@@ -336,6 +336,9 @@
                 let clickX = (e.clientX - rect.left) / (canvas.clientWidth / canvas.width);
                 let clickY = (e.clientY - rect.top) / (canvas.clientHeight / canvas.height);
 
+				if(clickX > RAY_CENTER.x || clickY > RAY_CENTER.y)
+					return;
+
                 if (is_cur_down) {
                     cur_angle = calcAngle(clickX, clickY);
                     redraw();
