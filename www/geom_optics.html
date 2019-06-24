@@ -2,37 +2,37 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
-        <link rel="stylesheet" type="text/css" href="css/shared-style.css">
-        <title>Геометрическая оптика</title>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="order-1 order-sm-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Назад</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="mx-auto order-2">
-                <span class="navbar-brand mx-auto" style="font-size: 17px;">Геометрическая оптика</span>
-            </div>
-            <div class="order-3">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="geom_optics_info.html">Инфо</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/geom_optics.css">
+    <link rel="stylesheet" type="text/css" href="css/shared-style.css">
+    <title>Геометрическая оптика</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="order-1 order-sm-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Назад</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-2">
+            <span class="navbar-brand mx-auto" style="font-size: 17px;">Геометрическая оптика</span>
+        </div>
+        <div class="order-3">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="geom_optics_info.html">Инфо</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-        <br>
+    <br>
 
-        <div style="text-align: center; margin-top: -10px; margin-bottom: -10px;">
-            Законы отражения и преломления<br><br>
+    <div style="text-align: center; margin-top: -10px; margin-bottom: -10px;">
+        Законы отражения и преломления<br><br>
 
             <!-- n1 = <input id="n1_in" type="number" value="1" step="0.0001" disabled="disabled" onchange="onChangeN()" style="width: 50px;">
             &nbsp;&nbsp;1 <input type="range" id="n1_slider_in" min="1" max="5" step="0.1" value="1" onchange="updText(this.value, 'n1_in')"> 5
@@ -47,8 +47,8 @@
         </div>
 
         <button class="mybtn" onclick="setFullReflAngle();">Угол ПВО</button><br>
-        <button class="mybtn">Теория</button><br>
-        <button class="mybtn">Видео</button><br>
+        <a href="geom_theory_2.htm"><button class="mybtn">Теория</button></a><br>
+        <a href="https://www.youtube.com/watch?v=qRpLf5woNjI" target="_blank"><button class="mybtn">Видео</button></a><br>
         <button class="mybtn">Задача</button>
 
         <div style="height: 100px"></div>
@@ -103,11 +103,13 @@
                 drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
 
                 if (cur_angle < Math.PI / 2) {
-                    drawAngleValue(ctx, RAY_CENTER, 150/3, Math.PI, refrAngle, '#000000', 2);
+                    //drawAngleValue(ctx, RAY_CENTER, 150/3, Math.PI, refrAngle, '#000000', 2);
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, Math.PI, refrAngle, "#000000", 2, true, "β");
                     drawAngleValue(ctx, RAY_CENTER, 150/3, 0, cur_angle, '#000000');
                 }
                 else {
-                    drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, 0, '#000000', 2);
+                    //drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, 0, '#000000', 2);
+                    drawAngleValue(ctx, RAY_CENTER, 150/3, refrAngle, 0, '#000000', 2, true, "β");
                     drawAngleValue(ctx, RAY_CENTER, 150/3, cur_angle, Math.PI, '#000000');
                 }
             }
@@ -120,7 +122,7 @@
                 ctx.font = "10px Arial";
                 ctx.fillStyle = "#222222";
                 //ctx.fillText("n1 = " + n1.toString().replace('.', ','), 10, 190);
-                ctx.fillText("воздух", 10, 190);
+                ctx.fillText("воздух", 8, 192);
 
                 // substance 2
                 ctx.fillStyle = "#E5E5FF";
@@ -129,7 +131,24 @@
                 ctx.font = "10px Arial";
                 ctx.fillStyle = "#222222";
                 //ctx.fillText("n2 = " + n2.toString().replace('.', ','), 10, 390);
-                ctx.fillText("стекло", 10, 390);
+                ctx.fillText("стекло", 8, 392);
+
+                // angle 0
+                ctx.font = "10px Arial";
+                ctx.fillStyle = "#222222";
+                ctx.fillText("0", 197, 45);
+
+                // angle 90
+                ctx.fillStyle = "#222222";
+                ctx.fillText("90", 30, 215);
+
+                // angle 180
+                ctx.fillStyle = "#222222";
+                ctx.fillText("180", 190, 365);
+
+                // angle 270
+                ctx.fillStyle = "#222222";
+                ctx.fillText("270", 355, 215);
 
                 // line between
                 ctx.beginPath();
@@ -148,6 +167,16 @@
                 ctx.stroke();
                 ctx.closePath();
 
+                // dashed circle
+                ctx.beginPath();
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 0.25;
+                ctx.setLineDash([7, 8]);
+                ctx.arc(200, 200, 150, 0, 2 * Math.PI);
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.lineWidth = 1;
                 ctx.setLineDash([1, 0]);
             }
 
@@ -179,7 +208,19 @@
                     return;
                 
                 drawAngledLine(ctx, point, angle, length, style);
+
                 if (where == 'in') {
+                    const p2 = calcSecondPoint(point, angle, length/2 - 5);
+                    drawAngledLine(ctx, p2, angle + 0.3, 14, style);
+                    drawAngledLine(ctx, p2, angle - 0.3, 14, style);
+                }
+                else if (where == 'out') {
+                    const p2 = calcSecondPoint(point, angle, length/2 + 5);
+                    drawAngledLine(ctx, p2, angle + Math.PI + 0.3, 14, style);
+                    drawAngledLine(ctx, p2, angle + Math.PI - 0.3, 14, style);
+                }
+
+                /*if (where == 'in') {
                     drawAngledLine(ctx, point, angle + 0.3, 14, style);
                     drawAngledLine(ctx, point, angle - 0.3, 14, style);
                 }
@@ -187,11 +228,11 @@
                     const p2 = calcSecondPoint(point, angle, length);
                     drawAngledLine(ctx, p2, angle + Math.PI + 0.3, 14, style);
                     drawAngledLine(ctx, p2, angle + Math.PI - 0.3, 14, style);
-                }
+                }*/
             }
 
-            function drawAngleValue(ctx, centerPoint, distance, startAngle, endAngle, style = "#00AA00", arcCount = 1, drawText = true) {
-                
+            function drawAngleValue(ctx, centerPoint, distance, startAngle, endAngle, style = "#00AA00", arcCount = 1, drawText = true, text = null) {
+
                 if(startAngle > Math.PI)
                     startAngle = -2*Math.PI + startAngle;
                 
@@ -212,24 +253,32 @@
 
                 const angleInDegrees = Math.round(angle/Math.PI*180);
 
+                let textPoint = null;
+
                 if(Math.abs(angle - Math.PI/2) < epsilon && angleInDegrees == 90) {
-                    const p1 = calcSecondPoint(centerPoint, startAngle, distance);
-                    const p2 = calcSecondPoint(centerPoint, endAngle, distance);
-                    const p3 = calcSecondPoint(p1, startAngle + Math.PI/2, distance);
+                    const p1 = calcSecondPoint(centerPoint, startAngle, distance/3);
+                    const p2 = calcSecondPoint(centerPoint, endAngle, distance/3);
+                    const p3 = calcSecondPoint(p1, startAngle + Math.PI/2, distance/3);
                     
                     ctx.moveTo(p3.x, p3.y);
                     ctx.lineTo(p1.x, p1.y);
                     ctx.moveTo(p3.x, p3.y);
                     ctx.lineTo(p2.x, p2.y);
 
-                } else
+                    textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 4/8*distance + 10);
+
+                } else {
                     ctx.arc(centerPoint.x, centerPoint.y, distance, -startAngle + 3*Math.PI/2, -endAngle + 3*Math.PI/2, true);
+
+                    textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 9/8*distance + 10);
+                }
                 
-                const textPoint = calcSecondPoint(centerPoint, startAngle + angle/2, 9/8*distance + 10);
 
                 ctx.font = "12px Arial";
-                if (drawText)
+                if (drawText && text == null)
                     ctx.fillText(angleInDegrees, textPoint.x, textPoint.y);
+                else if (drawText)
+                    ctx.fillText(text, textPoint.x, textPoint.y);
 
                 ctx.stroke();
                 ctx.closePath();
