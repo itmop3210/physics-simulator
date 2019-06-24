@@ -37,6 +37,27 @@
             <canvas id="canvas" width="400" height="400" style="margin-top: 30px;"></canvas>
         </div>
 
+		<nav class="navbar navbar-expand-sm">
+
+			<div class="order-0">
+        	       <ul class="navbar-nav ml-auto">
+            	       <li class="nav-item">
+                	       <input type="button" onclick="setBryuster()" value="Угол Брюстера"/>
+                  	   </li>
+       	           </ul>
+        	 </div>
+			 <div class="order-3">
+        	        <ul class="navbar-nav ml-auto">
+            	        <li class="nav-item">
+                	       <form action="polarization_theory.html">
+    							<input type="submit" value="Теория" />
+						   </form> 
+                    	</li>
+              	    </ul>
+             </div>
+		</nav>
+
+
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
         <script type="text/javascript" src="js/touchToCursor.js"></script>
 
@@ -55,6 +76,11 @@
                 updateCanvasSize();
                 redraw();
             }
+
+			function setBryuster() {
+				cur_angle = calcBryusterAngle(cur_angle, n1, n2);
+				redraw();
+			}
 
             function setupCanvas() {
                 const canvas = document.getElementById('canvas');
