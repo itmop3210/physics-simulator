@@ -41,15 +41,24 @@
 
                 <br/>
 
-                <button class="theory_button"><a class="link_in_btn" href="nuclear_reaction_theory.html">Теория</a></button>
+                <div style="float: left; padding-left: 10px; padding-bottom: 25px">
+                    <button class="theory_button"><a class="link_in_btn" href="nuclear_reaction_theory.html">Теория</a></button>
+                    <br/>
+                </div>
 
-                <br/>
-                <br/>
                 <br/>
 
                 <table width="100%">
                     <tr>
-                        <td width="70%">
+                        <td>
+                            <p>Тип распада</p>
+                        </td>
+                        <td>
+                            <p>Элемент</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="65%">
                             <!--<label>
                                 <select id="type_select" onchange="formula()">
                                     <option value="undefined">Тип превращения</option>
@@ -81,10 +90,8 @@
 
                         </td>
 
-                        <td width="30%">
+                        <td width="35%">
                             <div class="flex-container">
-                                <p>Элемент</p>
-
                                 <button class="my_button" value="92, 238, U" onclick="reaction(this)"><sup class="A">238</sup><sub class="Z">92</sub>U</button>
 
                                 <button class="my_button" value="88, 226, Ra" onclick="reaction(this)"><sup class="A">226</sup><sub class="Z">88</sub>Ra</button>
@@ -107,7 +114,6 @@
                             </div>
                         </td>
                     </tr>
-
                 </table>
 
                 <br/><br/>
