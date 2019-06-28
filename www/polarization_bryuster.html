@@ -112,17 +112,17 @@
 				const epsilon = 0.01;
 
                 drawSubstances(ctx);
-                drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in');
+                drawArrow(ctx, RAY_CENTER, cur_angle, 150, 'in',"#00AA00", 'unpolar', 'fall');
 				 
 				if( Math.abs(cur_angle - brAngle) < epsilon ||
 					(Math.abs(cur_angle - reverseBrAngle) < epsilon && cur_angle > Math.PI/2))
 				{
-                	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar');
-                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar' );
+                	drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA', 'polar', 'unref');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','half-polar', 'ref');
 				} else
 				{
-					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA');
-                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00');
+					drawArrow(ctx, RAY_CENTER, -cur_angle, 150, 'out', '#FF00AA','unpolar', 'unref');
+                	drawArrow(ctx, RAY_CENTER, refrAngle, 150, 'out', '#FFAA00','unpolar','ref');
 				}
 
 				if(cur_angle < Math.PI/2) {
@@ -196,7 +196,7 @@
                 ctx.closePath();
             }
 
-			function drawAngledLineWithDashes(ctx, point, angle, length, style = "#00AA00", state = 'unpolar') {
+			function drawAngledLineWithDashes(ctx, point, angle, length, style = "#00AA00", state = 'unpolar', type = 'unref') {
                 if (isNaN(angle))
                     return;
 
@@ -205,7 +205,10 @@
 				let margin = length/10;
 				let dashLength = length/20;
 
-				if(state != 'polar')
+				if(state == 'unpolar')
+				{
+					drawUnpolarDashes(ctx, point, angle, length,"#00AA00", type);	
+				}else if(state == 'half-polar')
 				{
 					//draw dashes
 					for(let i = 1; i < 9; i++)
@@ -215,22 +218,7 @@
 					
 						drawAngledLine(ctx, p1, angle - Math.PI/2, dashLength, '#7A7A7A');
 					}
-				}
 
-				if(state != 'half-polar')
-				{
-					for(let i = 1; i < 9; i++)
-					{
-						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
-
-						ctx.beginPath();
-						ctx.strokeStyle = '#7A7A7A';
-						ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
-						ctx.stroke();
-						ctx.closePath();
-					}					
-				}else 
-				{
 					for(let i = 1; i < 9; i++ )
 					{
 						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
@@ -251,14 +239,84 @@
 						}
 					}		
 				}
+				else
+				{
+					for(let i = 1; i < 9; i++)
+					{
+						let dotPoint = calcSecondPoint(point, angle, margin*i + margin/2);
+						ctx.beginPath();
+						ctx.strokeStyle = '#7A7A7A';
+						ctx.arc(dotPoint.x, dotPoint.y, 1, 0, 2*Math.PI, true);
+						ctx.stroke();
+						ctx.closePath();
+					}
+				}
 
 			}
 
-            function drawArrow(ctx, point, angle, length, where, style = "#00AA00", state) {
+			function drawUnpolarDashes(ctx, point, angle, length, style = "#00AA00", type = 'ref') {
+				
+				let margin = length/20;
+				let dashLength = length/20;
+				
+				if(type != 'fall')
+				{
+					for(let i = 1; i < 17; i++)
+					{
+						let centerPoint = calcSecondPoint(point, angle, margin*i);
+
+						if(i%3 == 0)
+						{
+							if(type == 'unref')
+								drawDash(ctx, centerPoint, angle, dashLength);
+							else
+								drawDot(ctx, centerPoint);
+						}
+						else
+						{
+							if(type == 'unref')
+								drawDot(ctx, centerPoint);
+							else
+								drawDash(ctx, centerPoint, angle, dashLength);
+
+						}	
+					}
+				}
+				else
+				{
+					for(let i = 1; i < 9; i++)
+					{
+						let centerPoint = calcSecondPoint(point, angle, 2*margin*i);
+						
+						drawDash(ctx, centerPoint, angle, dashLength);
+
+						centerPoint = calcSecondPoint(point, angle, 2*margin*i + margin);
+						
+						drawDot(ctx,centerPoint);
+					}
+				}
+			}
+
+			function drawDash(ctx, centerPoint, angle, dashLength, style = '#7A7A7A') {
+				let p1 = calcSecondPoint(centerPoint, angle + Math.PI/2, dashLength/2);
+					
+				drawAngledLine(ctx, p1, angle - Math.PI/2, dashLength, style);
+			}
+
+			function drawDot(ctx, centerPoint, style = '#7A7A7A') {
+				ctx.beginPath();
+				ctx.strokeStyle = style;
+				ctx.arc(centerPoint.x, centerPoint.y, 1, 0, 2*Math.PI, true);
+				ctx.stroke();
+				ctx.closePath();
+
+			}
+
+            function drawArrow(ctx, point, angle, length, where, style = "#00AA00", state, type ='unref') {
                 if (isNaN(angle))
                     return;
                 
-                drawAngledLineWithDashes(ctx, point, angle, length, style, state);
+                drawAngledLineWithDashes(ctx, point, angle, length, style, state, type);
                 if (where == 'in') {
                     drawAngledLine(ctx, point, angle + 0.3, 14, style);
                     drawAngledLine(ctx, point, angle - 0.3, 14, style);
