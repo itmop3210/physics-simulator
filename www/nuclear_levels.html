@@ -37,11 +37,12 @@
 			<div id="canvas-container">
 				<br/>
 
-				<h3>Энергетические уровни</h3>
+				<h4>Энергетические уровни</h4>
 
-				<br/>
-                <button class="theory_button"><a class="link_in_btn" href="levels_theory.html">Теория</a></button>
-				<br/><br/>
+				<div style="float: left; padding-left: 10px; padding-bottom: 25px">
+					<button class="theory_button"><a class="link_in_btn" href="levels_theory.html">Теория</a></button>
+					<br/>
+				</div><br/>
 
 				<form>
 					<b>Выберите серии для показа:</b>
@@ -421,7 +422,34 @@
 					ctx.arc(xCord, yCord, 7, 0, 2 * Math.PI);
 					ctx.fillStyle = gradient;
 					ctx.fill();
-					_callback();
+
+					//drawing electron path only if it was moving
+                    if(yDest - levels[currN-1] !== 0) {
+                        ctx.strokeStyle = "#222222";
+                        //ctx.strokeStyle = "#d95300";
+                        ctx.setLineDash([5, 5]);
+                        ctx.beginPath();
+                        ctx.moveTo(xCord, levels[currN-1]);
+                        ctx.lineTo(xCord, yDest);
+                        ctx.stroke();
+                        ctx.setLineDash([0]);
+                        ctx.beginPath();
+                        if (yDest - levels[currN-1] > 0) {
+                            ctx.moveTo(xCord, yDest);
+                            ctx.lineTo(xCord-4, yDest-8);
+                            ctx.moveTo(xCord, yDest);
+                            ctx.lineTo(xCord+4, yDest-8);
+                        } else {
+                            ctx.moveTo(xCord, yDest);
+                            ctx.lineTo(xCord-4, yDest+8);
+                            ctx.moveTo(xCord, yDest);
+                            ctx.lineTo(xCord+4, yDest+8);
+                        }
+                        ctx.stroke();
+                        //ctx.strokeStyle = "#222222";
+                    }
+
+                    _callback();
 				}
 			}
 
